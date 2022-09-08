@@ -12,8 +12,8 @@ const start = async () => {
     await dbInit();
     app.listen(port);
   } catch (e) {
-    console.log(e)
+    // console.log(e);
   }
-}
+};
 
-start()
+start();

@@ -3,4 +3,4 @@ enum Role {
   Admin = 'Admin',
 }
 
-export { Role };
+export default Role;
