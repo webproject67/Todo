@@ -1,9 +1,19 @@
 import 'dotenv/config';
 import express from 'express';
+import dbInit from './db/init';
 
-const PORT = process.env.PORT;
+const port = process.env.PORT;
 const app = express();
 
-app.get('/', (req, res) => res.send(PORT));
+app.get('/', (req, res) => res.send(port));
 
-app.listen(PORT);
+const start = async () => {
+  try {
+    await dbInit();
+    app.listen(port);
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+start()
