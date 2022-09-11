@@ -7,6 +7,6 @@ type CreateUserDTO = {
   role: Role.Admin | Role.User;
 };
 
-type SignUserDTO = Optional<CreateUserDTO, 'role'>;
+type SignInUserDTO = Optional<CreateUserDTO, 'role'>;
 
-export { CreateUserDTO, SignUserDTO };
+export { CreateUserDTO, SignInUserDTO };

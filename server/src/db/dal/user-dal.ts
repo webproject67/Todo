@@ -6,9 +6,9 @@ const create = async (data: UserInput): Promise<UserOuput> => {
   return newUser;
 };
 
-const sign = async ({ email }: UserInput): Promise<UserOuput | null> => {
-  const signUser = await UserModel.findOne({ where: { email } });
-  return signUser;
+const signIn = async ({ email }: UserInput): Promise<UserOuput | null> => {
+  const user = await UserModel.findOne({ where: { email } });
+  return user;
 };
 
 const getAll = async (): Promise<UsersAndCountAll> => {
@@ -21,4 +21,4 @@ const deleteById = async (id: number): Promise<boolean> => {
   return !!deletedUser;
 };
 
-export { create, sign, getAll, deleteById };
+export { create, signIn, getAll, deleteById };
