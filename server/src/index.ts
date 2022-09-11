@@ -1,19 +1,20 @@
 import 'dotenv/config';
-import express from 'express';
+import express, { Application } from 'express';
+import cors from 'cors';
+import bodyParser from 'body-parser';
+import multer from 'multer';
 import dbInit from './db/init';
+import routes from './api/routes';
 
-const port = process.env.PORT;
-const app = express();
+const port = process.env.PORT as string;
+const app: Application = express();
+const upload = multer();
 
-app.get('/', (req, res) => res.send(port));
+dbInit();
 
-const start = async () => {
-  try {
-    await dbInit();
-    app.listen(port);
-  } catch (e) {
-    // console.log(e);
-  }
-};
-
-start();
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(upload.none());
+app.use('/api/v1', routes);
+app.listen(port);

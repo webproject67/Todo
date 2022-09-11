@@ -1,8 +1,10 @@
-import { DataTypes } from 'sequelize';
+import { DataTypes, Model } from 'sequelize';
 import sequelize from '../config';
-import Role from '../../utils/const';
+import { UserInput, UserOuput, UserAttributes } from '../../types/user-type';
 
-const User = sequelize.define('User', {
+interface IUser extends Model<UserAttributes, UserInput>, UserOuput {}
+
+const User = sequelize.define<IUser>('User', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -19,7 +21,6 @@ const User = sequelize.define('User', {
   },
   role: {
     type: DataTypes.STRING,
-    defaultValue: Role.User,
   },
 });
 

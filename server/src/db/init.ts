@@ -1,10 +1,15 @@
-import User from './models/User';
-import Task from './models/Task';
+import { Sequelize } from 'sequelize';
+import { UserModel, TaskModel } from './models';
 import sequelize from './config';
 
-User.hasMany(Task);
-Task.belongsTo(User);
+const isDev = process.env.NODE_ENV === 'development';
 
-const dbInit = () => sequelize.sync();
+UserModel.hasMany(TaskModel);
+TaskModel.belongsTo(UserModel);
+
+const dbInit = async (): Promise<Sequelize> => {
+  const init = await sequelize.sync({ alter: isDev });
+  return init;
+};
 
 export default dbInit;
