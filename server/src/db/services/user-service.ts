@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import * as userDal from '../../db/dal/user-dal';
+import * as userDal from '../dal/user-dal';
 import { UserInput, UserOuput, UsersAndCountAll } from '../../types/user-type';
 
 const create = async ({

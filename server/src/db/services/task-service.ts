@@ -1,4 +1,4 @@
-import * as taskDal from '../../db/dal/task-dal';
+import * as taskDal from '../dal/task-dal';
 import { TaskInput, TaskOuput, TasksAndCountAll } from '../../types/task-type';
 
 const create = async (data: TaskInput): Promise<TaskOuput> =>

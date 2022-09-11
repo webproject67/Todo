@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
-import * as service from '../../services/user-service';
-import { CreateUserDTO, SignUserDTO } from '../../../db/dto/user-dto';
+import * as service from '../../../db/services/user-service';
+import { CreateUserDTO, SignUserDTO } from '../../dto/user-dto';
 import mapper from './mapper';
 import { UserJwt, UsersAndCountAll } from '../../../types/user-type';
 

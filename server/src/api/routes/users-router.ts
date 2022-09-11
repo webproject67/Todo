@@ -1,7 +1,7 @@
 import { Router, Request, Response } from 'express';
 import * as userController from '../controllers/user/user-controller';
 import Role from '../../utils/const';
-import { CreateUserDTO, SignUserDTO } from '../../db/dto/user-dto';
+import { CreateUserDTO, SignUserDTO } from '../dto/user-dto';
 
 const usersRouter = Router();
 

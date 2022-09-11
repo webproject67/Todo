@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
 import * as taskController from '../controllers/task/task-controller';
-import CreateTaskDTO from '../../db/dto/task-dto';
+import CreateTaskDTO from '../dto/task-dto';
 
 const tasksRouter = Router();
 
