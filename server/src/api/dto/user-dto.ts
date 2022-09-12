@@ -1,5 +1,5 @@
 import { Optional } from 'sequelize';
-import Role from '../../utils/const';
+import { Role } from '../../utils/const';
 
 type CreateUserDTO = {
   email: string;

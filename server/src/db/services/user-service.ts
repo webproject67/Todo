@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import createError from 'http-errors';
 import * as userDal from '../dal/user-dal';
 import { UserInput, UsersAndCountAll, UserJwt } from '../../types/user-type';
 
@@ -20,14 +21,9 @@ const create = async ({
 
 const signIn = async (data: UserInput): Promise<string> => {
   const result = await userDal.signIn(data);
-  let token = '';
-  if (result)
-    token = generateJwt({
-      id: result.id,
-      email: result.email,
-      role: result.role,
-    });
-  return token;
+  const comparePassword = bcrypt.compareSync(data.password, result.password);
+  if (!comparePassword) throw createError(401, `Неверный пароль`);
+  return generateJwt({ id: result.id, email: result.email, role: result.role });
 };
 
 const getAll = async (): Promise<UsersAndCountAll> => userDal.getAll();

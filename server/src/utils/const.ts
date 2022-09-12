@@ -3,4 +3,9 @@ enum Role {
   Admin = 'Admin',
 }
 
-export default Role;
+enum TypeTextField {
+  Email = 'email',
+  Password = 'password',
+}
+
+export { Role, TypeTextField };
