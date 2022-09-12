@@ -18,9 +18,9 @@ const getAll = async (): Promise<UsersAndCountAll> => {
   return users;
 };
 
-const deleteById = async (id: number): Promise<boolean> => {
-  const deletedUser = await UserModel.destroy({ where: { id } });
+const deleteByUuid = async (uuid: string): Promise<boolean> => {
+  const deletedUser = await UserModel.destroy({ where: { uuid } });
   return !!deletedUser;
 };
 
-export { create, signIn, getAll, deleteById };
+export { create, signIn, getAll, deleteByUuid };

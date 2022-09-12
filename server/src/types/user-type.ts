@@ -2,7 +2,7 @@ import { Optional } from 'sequelize';
 import { Role } from '../utils/const';
 
 type UserAttributes = {
-  id: number;
+  uuid: string;
   email: string;
   password: string;
   role?: Role.Admin | Role.User;
@@ -10,7 +10,7 @@ type UserAttributes = {
   updatedAt?: Date;
 };
 
-type UserInput = Optional<UserAttributes, 'id'>;
+type UserInput = Optional<UserAttributes, 'uuid'>;
 
 type UserOuput = Required<UserAttributes>;
 

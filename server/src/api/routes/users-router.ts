@@ -12,6 +12,6 @@ usersRouter.post(
 );
 usersRouter.post('/sign', userController.signIn);
 usersRouter.get('/', userController.getAll);
-usersRouter.delete('/', userController.deleteById);
+usersRouter.delete('/', userController.deleteByUuid);
 
 export default usersRouter;

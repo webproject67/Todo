@@ -1,14 +1,14 @@
 import { Optional } from 'sequelize';
 
 type TaskAttributes = {
-  id: number;
+  uuid: string;
   task: string;
   createdAt?: Date;
   updatedAt?: Date;
-  UserId?: number;
+  UserUuid?: string;
 };
 
-type TaskInput = Optional<TaskAttributes, 'id'>;
+type TaskInput = Optional<TaskAttributes, 'uuid'>;
 
 type TaskOuput = Required<TaskAttributes>;
 

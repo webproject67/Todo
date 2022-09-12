@@ -1,6 +1,6 @@
 type CreateTaskDTO = {
   task: string;
-  UserId: number;
+  UserUuid: string;
 };
 
 export default CreateTaskDTO;

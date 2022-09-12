@@ -6,6 +6,6 @@ const tasksRouter = Router();
 
 tasksRouter.post('/', body('task').notEmpty(), taskController.create);
 tasksRouter.get('/', taskController.getAll);
-tasksRouter.delete('/', taskController.deleteById);
+tasksRouter.delete('/', taskController.deleteByUuid);
 
 export default tasksRouter;

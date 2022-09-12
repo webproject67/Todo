@@ -5,10 +5,10 @@ import { UserInput, UserOuput, UserAttributes } from '../../types/user-type';
 interface IUser extends Model<UserAttributes, UserInput>, UserOuput {}
 
 const User = sequelize.define<IUser>('User', {
-  id: {
-    type: DataTypes.INTEGER,
+  uuid: {
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
     primaryKey: true,
-    autoIncrement: true,
   },
   email: {
     type: DataTypes.STRING,

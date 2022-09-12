@@ -11,9 +11,9 @@ const getAll = async (): Promise<TasksAndCountAll> => {
   return tasks;
 };
 
-const deleteById = async (id: number): Promise<boolean> => {
-  const deletedTask = await TaskModel.destroy({ where: { id } });
+const deleteByUuid = async (uuid: string): Promise<boolean> => {
+  const deletedTask = await TaskModel.destroy({ where: { uuid } });
   return !!deletedTask;
 };
 
-export { create, getAll, deleteById };
+export { create, getAll, deleteByUuid };

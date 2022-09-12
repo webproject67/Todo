@@ -21,10 +21,10 @@ const getAll = async (req: Request, res: Response) => {
   return res.json(result);
 };
 
-const deleteById = async (req: Request, res: Response) => {
-  const id = Number(req.body.id);
-  const result = await service.deleteById(id);
+const deleteByUuid = async (req: Request, res: Response) => {
+  const { uuid } = req.body;
+  const result = await service.deleteByUuid(uuid);
   return res.json(result);
 };
 
-export { create, getAll, deleteById };
+export { create, getAll, deleteByUuid };

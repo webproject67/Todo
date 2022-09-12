@@ -6,7 +6,7 @@ const create = async (data: TaskInput): Promise<TaskOuput> =>
 
 const getAll = async (): Promise<TasksAndCountAll> => taskDal.getAll();
 
-const deleteById = async (id: number): Promise<boolean> =>
-  taskDal.deleteById(id);
+const deleteByUuid = async (uuid: string): Promise<boolean> =>
+  taskDal.deleteByUuid(uuid);
 
-export { create, getAll, deleteById };
+export { create, getAll, deleteByUuid };

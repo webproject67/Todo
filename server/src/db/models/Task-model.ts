@@ -5,10 +5,10 @@ import { TaskInput, TaskOuput, TaskAttributes } from '../../types/task-type';
 interface ITask extends Model<TaskAttributes, TaskInput>, TaskOuput {}
 
 const Task = sequelize.define<ITask>('Task', {
-  id: {
-    type: DataTypes.INTEGER,
+  uuid: {
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
     primaryKey: true,
-    autoIncrement: true,
   },
   task: {
     type: DataTypes.STRING,

@@ -16,19 +16,27 @@ const create = async ({
 }: UserInput): Promise<string> => {
   const hashPassword = await bcrypt.hash(password, 15);
   const result = await userDal.create({ email, role, password: hashPassword });
-  return generateJwt({ id: result.id, email: result.email, role: result.role });
+  return generateJwt({
+    uuid: result.uuid,
+    email: result.email,
+    role: result.role,
+  });
 };
 
 const signIn = async (data: UserInput): Promise<string> => {
   const result = await userDal.signIn(data);
   const comparePassword = bcrypt.compareSync(data.password, result.password);
   if (!comparePassword) throw createError(401, `Неверный пароль`);
-  return generateJwt({ id: result.id, email: result.email, role: result.role });
+  return generateJwt({
+    uuid: result.uuid,
+    email: result.email,
+    role: result.role,
+  });
 };
 
 const getAll = async (): Promise<UsersAndCountAll> => userDal.getAll();
 
-const deleteById = async (id: number): Promise<boolean> =>
-  userDal.deleteById(id);
+const deleteByUuid = async (uuid: string): Promise<boolean> =>
+  userDal.deleteByUuid(uuid);
 
-export { create, signIn, getAll, deleteById };
+export { create, signIn, getAll, deleteByUuid };
