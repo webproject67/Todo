@@ -6,8 +6,8 @@ const usersRouter = Router();
 
 usersRouter.post(
   '/',
-  body('email').isEmail(),
-  body('password').isLength({ min: 6 }),
+  body('email').trim().normalizeEmail().isEmail(),
+  body('password').trim().isLength({ min: 6 }),
   userController.create
 );
 usersRouter.post('/sign', userController.signIn);

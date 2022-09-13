@@ -14,6 +14,10 @@ const create = async ({
   password,
   role,
 }: UserInput): Promise<string> => {
+  const candidate = await userDal.signIn({ email, password });
+  if (candidate)
+    throw createError(401, `Пользователь с таким ${email} уже существует`);
+
   const hashPassword = await bcrypt.hash(password, 15);
   const result = await userDal.create({ email, role, password: hashPassword });
   return generateJwt({
@@ -23,14 +27,17 @@ const create = async ({
   });
 };
 
-const signIn = async (data: UserInput): Promise<string> => {
-  const result = await userDal.signIn(data);
-  const comparePassword = bcrypt.compareSync(data.password, result.password);
+const signIn = async ({ email, password }: UserInput): Promise<string> => {
+  const candidate = await userDal.signIn({ email, password });
+  if (!candidate)
+    throw createError(401, `Пользователь с таким ${email} не найден`);
+
+  const comparePassword = bcrypt.compareSync(password, candidate.password);
   if (!comparePassword) throw createError(401, `Неверный пароль`);
   return generateJwt({
-    uuid: result.uuid,
-    email: result.email,
-    role: result.role,
+    uuid: candidate.uuid,
+    email: candidate.email,
+    role: candidate.role,
   });
 };
 
