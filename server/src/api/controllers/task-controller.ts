@@ -3,28 +3,32 @@ import { validationResult } from 'express-validator';
 import createError from 'http-errors';
 import asyncHandler from 'express-async-handler';
 import * as service from '../../db/services/task-service';
-import CreateTaskDTO from '../dto/task-dto';
+import { TaskDto } from '../dtos';
 
-const create = asyncHandler(
+const createTask = asyncHandler(
   async (req: Request, res: Response): Promise<any> => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) throw createError(400, 'Введите задачу');
 
-    const payload: CreateTaskDTO = req.body;
-    const result = await service.create(payload);
+    const payload: TaskDto = req.body;
+    const result = await service.createTask(payload);
+
     return res.json(result);
   }
 );
 
-const getAll = async (req: Request, res: Response) => {
-  const result = await service.getAll();
+const getTasksAll = async (req: Request, res: Response) => {
+  const payload: TaskDto = req.body;
+  const result = await service.getTasksAll(payload);
+
   return res.json(result);
 };
 
-const deleteByUuid = async (req: Request, res: Response) => {
-  const { uuid } = req.body;
-  const result = await service.deleteByUuid(uuid);
+const deleteTask = async (req: Request, res: Response) => {
+  const payload = req.body;
+  const result = await service.deleteTask(payload);
+
   return res.json(result);
 };
 
-export { create, getAll, deleteByUuid };
+export { createTask, getTasksAll, deleteTask };

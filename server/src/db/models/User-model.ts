@@ -1,14 +1,15 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../config';
-import { UserInput, UserOuput, UserAttributes } from '../../types/user-type';
+import { UserAttributes, UserInput, UserOuput } from '../../types/user-type';
+import { Role } from '../../utils/const';
 
 interface IUser extends Model<UserAttributes, UserInput>, UserOuput {}
 
 const User = sequelize.define<IUser>('User', {
   uuid: {
     type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
     primaryKey: true,
+    defaultValue: DataTypes.UUIDV4,
   },
   email: {
     type: DataTypes.STRING,
@@ -19,8 +20,13 @@ const User = sequelize.define<IUser>('User', {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+  },
   role: {
-    type: DataTypes.STRING,
+    type: DataTypes.ENUM(Role.User, Role.Admin),
+    defaultValue: Role.User,
   },
 });
 

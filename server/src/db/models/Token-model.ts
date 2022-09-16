@@ -1,18 +1,23 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../config';
-import { TaskAttributes, TaskInput, TaskOuput } from '../../types/task-type';
+import {
+  TokenAttributes,
+  TokenInput,
+  TokenOuput,
+} from '../../types/token-type';
 
-interface ITask extends Model<TaskAttributes, TaskInput>, TaskOuput {}
+interface IToken extends Model<TokenAttributes, TokenInput>, TokenOuput {}
 
-const Task = sequelize.define<ITask>('Task', {
+const Token = sequelize.define<IToken>('Token', {
   uuid: {
     type: DataTypes.UUID,
     primaryKey: true,
     defaultValue: DataTypes.UUIDV4,
   },
-  task: {
+  refreshToken: {
     type: DataTypes.STRING,
     allowNull: false,
+    unique: true,
   },
   id: {
     type: DataTypes.INTEGER,
@@ -20,4 +25,4 @@ const Task = sequelize.define<ITask>('Task', {
   },
 });
 
-export default Task;
+export default Token;

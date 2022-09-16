@@ -3,6 +3,7 @@ import { Optional } from 'sequelize';
 type TaskAttributes = {
   uuid: string;
   task: string;
+  id?: number;
   createdAt?: Date;
   updatedAt?: Date;
   UserUuid?: string;

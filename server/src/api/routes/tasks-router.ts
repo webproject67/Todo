@@ -4,8 +4,12 @@ import * as taskController from '../controllers/task-controller';
 
 const tasksRouter = Router();
 
-tasksRouter.post('/', body('task').trim().notEmpty(), taskController.create);
-tasksRouter.get('/', taskController.getAll);
-tasksRouter.delete('/', taskController.deleteByUuid);
+tasksRouter.post(
+  '/',
+  body('task').trim().notEmpty(),
+  taskController.createTask
+);
+tasksRouter.get('/', taskController.getTasksAll);
+tasksRouter.delete('/', taskController.deleteTask);
 
 export default tasksRouter;

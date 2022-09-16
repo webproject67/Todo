@@ -8,10 +8,11 @@ usersRouter.post(
   '/',
   body('email').trim().normalizeEmail().isEmail(),
   body('password').trim().isLength({ min: 6 }),
-  userController.create
+  userController.signUp
 );
 usersRouter.post('/sign', userController.signIn);
-usersRouter.get('/', userController.getAll);
-usersRouter.delete('/', userController.deleteByUuid);
+usersRouter.delete('/sign', userController.signOut);
+usersRouter.get('/', userController.getUsersAll);
+usersRouter.delete('/', userController.deleteUser);
 
 export default usersRouter;

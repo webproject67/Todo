@@ -1,12 +1,13 @@
-import * as taskDal from '../dal/task-dal';
+import * as taskDal from '../dals/task-dal';
 import { TaskInput, TaskOuput, TasksAndCountAll } from '../../types/task-type';
 
-const create = async (data: TaskInput): Promise<TaskOuput> =>
-  taskDal.create(data);
+const createTask = async (payload: TaskInput): Promise<TaskOuput> =>
+  taskDal.createTask(payload);
 
-const getAll = async (): Promise<TasksAndCountAll> => taskDal.getAll();
+const getTasksAll = async (payload: TaskInput): Promise<TasksAndCountAll> =>
+  taskDal.getTasksAll(payload);
 
-const deleteByUuid = async (uuid: string): Promise<boolean> =>
-  taskDal.deleteByUuid(uuid);
+const deleteTask = async (payload: TaskInput): Promise<boolean> =>
+  taskDal.deleteTask(payload);
 
-export { create, getAll, deleteByUuid };
+export { createTask, getTasksAll, deleteTask };
