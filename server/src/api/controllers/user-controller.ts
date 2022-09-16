@@ -6,7 +6,7 @@ import * as userService from '../../db/services/user-service';
 import * as tokenService from '../../db/services/token-service';
 import { UserDto, TokenDto } from '../dtos';
 import { TypeTextField } from '../../utils/const';
-import createCookie from '../../utils/createCookie';
+import createCookie from '../../utils/create-cookie';
 
 const signUp = asyncHandler(
   async (req: Request, res: Response): Promise<any> => {
@@ -47,15 +47,23 @@ const signOut = asyncHandler(
   }
 );
 
-const getUsersAll = async (req: Request, res: Response) => {
-  const result = await userService.getUsersAll();
-  return res.json(result);
-};
+const getUsersAll = asyncHandler(
+  async (req: Request, res: Response): Promise<any> => {
+    const { refreshToken }: TokenDto = req.cookies;
+    const result = await userService.getUsersAll({ refreshToken });
 
-const deleteUser = async (req: Request, res: Response) => {
-  const payload: UserDto = req.body;
-  const result = await userService.deleteUser(payload);
-  return res.json(result);
-};
+    return res.json(result);
+  }
+);
+
+const deleteUser = asyncHandler(
+  async (req: Request, res: Response): Promise<any> => {
+    const { refreshToken }: TokenDto = req.cookies;
+    const payload: UserDto = req.body;
+    const result = await userService.deleteUser({ refreshToken }, payload);
+
+    return res.json(result);
+  }
+);
 
 export { signUp, signIn, signOut, getUsersAll, deleteUser };

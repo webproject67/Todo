@@ -9,6 +9,8 @@ import {
   UserOuputJwt,
   UserCreate,
 } from '../../types/user-type';
+import { TokenInput } from '../../types/token-type';
+import checkRole from '../../utils/check-role';
 
 const jwtAccessSecret = process.env.JWT_ACCESS_SECRET as string;
 const jwtRefreshSecret = process.env.JWT_REFRESH_SECRET as string;
@@ -28,8 +30,7 @@ const createUser = async ({
   password,
 }: UserInput): Promise<UserCreate> => {
   const findCandidate = await userDal.getUserByEmail({ email, password });
-  if (findCandidate)
-    throw createError(401, `Пользователь с таким ${email} уже существует`);
+  if (findCandidate) throw createError(401, `${email} уже существует`);
 
   const hashPassword = await bcrypt.hash(password, 15);
   const candidate = await userDal.createUser({ email, password: hashPassword });
@@ -45,8 +46,7 @@ const getUserByEmail = async (
   ceckPassword: boolean
 ): Promise<UserCreate> => {
   const candidate = await userDal.getUserByEmail({ email, password });
-  if (!candidate)
-    throw createError(401, `Пользователь с таким ${email} не найден`);
+  if (!candidate) throw createError(401, `${email} не найден`);
 
   if (ceckPassword) {
     const comparePassword = bcrypt.compareSync(password, candidate.password);
@@ -59,10 +59,21 @@ const getUserByEmail = async (
   };
 };
 
-const getUsersAll = async (): Promise<UsersAndCountAll> =>
-  userDal.getUsersAll();
+const getUsersAll = async (
+  refreshToken: TokenInput
+): Promise<UsersAndCountAll> => {
+  await checkRole(refreshToken);
 
-const deleteUser = async (payload: UserInput): Promise<boolean> =>
-  userDal.deleteUser(payload);
+  return userDal.getUsersAll();
+};
+
+const deleteUser = async (
+  refreshToken: TokenInput,
+  payload: UserInput
+): Promise<boolean> => {
+  await checkRole(refreshToken);
+
+  return userDal.deleteUser(payload);
+};
 
 export { createUser, getUserByEmail, getUsersAll, deleteUser };

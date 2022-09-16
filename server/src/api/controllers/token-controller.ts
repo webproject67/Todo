@@ -3,7 +3,7 @@ import asyncHandler from 'express-async-handler';
 import * as userService from '../../db/services/user-service';
 import * as tokenService from '../../db/services/token-service';
 import { TokenDto } from '../dtos';
-import createCookie from '../../utils/createCookie';
+import createCookie from '../../utils/create-cookie';
 
 const refreshToken = asyncHandler(
   async (req: Request, res: Response): Promise<any> => {
