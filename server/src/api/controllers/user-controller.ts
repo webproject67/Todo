@@ -57,8 +57,7 @@ const signOut = asyncHandler(
 
 const getUsersAll = asyncHandler(
   async (req: Request, res: Response): Promise<any> => {
-    const { refreshToken }: TokenDto = req.cookies;
-    const result = await userService.getUsersAll({ refreshToken });
+    const result = await userService.getUsersAll();
 
     return res.json(result);
   }
@@ -66,9 +65,8 @@ const getUsersAll = asyncHandler(
 
 const deleteUser = asyncHandler(
   async (req: Request, res: Response): Promise<any> => {
-    const { refreshToken }: TokenDto = req.cookies;
     const payload: UserDto = req.body;
-    const result = await userService.deleteUser({ refreshToken }, payload);
+    const result = await userService.deleteUser(payload);
 
     return res.json(result);
   }

@@ -3,6 +3,7 @@ import * as tokenDal from '../dals/token-dal';
 import { TokenInput, TokenOuput } from '../../types/token-type';
 import { UserOuput } from '../../types/user-type';
 import verifyJwt from '../../utils/verify-jwt';
+import { TypeToken } from '../../utils/const';
 
 const createToken = async (
   payload: TokenInput
@@ -19,7 +20,7 @@ const deleteToken = (payload: TokenInput): Promise<boolean> =>
 const refresh = async (payload: TokenInput): Promise<UserOuput> => {
   if (!payload.refreshToken) throw createError(401, `Не авторизован`);
 
-  const userData = await verifyJwt(payload.refreshToken);
+  const userData = await verifyJwt(payload.refreshToken, TypeToken.Refresh);
   const token = tokenDal.getTokenByRefreshToken(payload);
   if (!userData || !token) throw createError(401, `Не авторизован`);
 

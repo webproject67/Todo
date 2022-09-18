@@ -11,8 +11,6 @@ import {
   UserCreate,
   UserUpdateActivate,
 } from '../../types/user-type';
-import { TokenInput } from '../../types/token-type';
-import checkRole from '../../utils/check-role';
 
 const jwtAccessSecret = process.env.JWT_ACCESS_SECRET as string;
 const jwtRefreshSecret = process.env.JWT_REFRESH_SECRET as string;
@@ -66,22 +64,11 @@ const getUserByUuid = async (payload: UserLinkActivate): Promise<void> => {
   if (!candidate) throw createError(401, `Неккоректная ссылка активации`);
 };
 
-const getUsersAll = async (
-  refreshToken: TokenInput
-): Promise<UsersAndCountAll> => {
-  await checkRole(refreshToken);
+const getUsersAll = async (): Promise<UsersAndCountAll> =>
+  userDal.getUsersAll();
 
-  return userDal.getUsersAll();
-};
-
-const deleteUser = async (
-  refreshToken: TokenInput,
-  payload: UserInput
-): Promise<boolean> => {
-  await checkRole(refreshToken);
-
-  return userDal.deleteUser(payload);
-};
+const deleteUser = async (payload: UserInput): Promise<boolean> =>
+  userDal.deleteUser(payload);
 
 const updateUserActivated = async (
   payload: UserUpdateActivate

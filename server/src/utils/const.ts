@@ -1,6 +1,7 @@
 enum Role {
   User = 'user',
   Admin = 'admin',
+  SuperAdmin = 'superAdmin',
 }
 
 enum TypeTextField {
@@ -8,4 +9,9 @@ enum TypeTextField {
   Password = 'password',
 }
 
-export { Role, TypeTextField };
+enum TypeToken {
+  Refresh = 'refresh',
+  Access = 'access',
+}
+
+export { Role, TypeTextField, TypeToken };

@@ -6,7 +6,7 @@ type UserAttributes = {
   email: string;
   password: string;
   id?: number;
-  role?: Role.Admin | Role.User;
+  role?: Role.Admin | Role.User | Role.SuperAdmin;
   isActivated?: boolean;
   createdAt?: Date;
   updatedAt?: Date;

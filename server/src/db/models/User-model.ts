@@ -25,7 +25,7 @@ const User = sequelize.define<IUser>('User', {
     autoIncrement: true,
   },
   role: {
-    type: DataTypes.ENUM(Role.User, Role.Admin),
+    type: DataTypes.ENUM(Role.User, Role.Admin, Role.SuperAdmin),
     defaultValue: Role.User,
   },
   isActivated: {

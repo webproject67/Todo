@@ -3,7 +3,7 @@ import { validationResult } from 'express-validator';
 import createError from 'http-errors';
 import asyncHandler from 'express-async-handler';
 import * as service from '../../db/services/task-service';
-import { TaskDto, TokenDto } from '../dtos';
+import { TaskDto } from '../dtos';
 
 const createTask = asyncHandler(
   async (req: Request, res: Response): Promise<any> => {
@@ -11,8 +11,7 @@ const createTask = asyncHandler(
     if (!errors.isEmpty()) throw createError(400, 'Введите задачу');
 
     const payload: TaskDto = req.body;
-    const { refreshToken }: TokenDto = req.cookies;
-    const result = await service.createTask({ refreshToken }, payload);
+    const result = await service.createTask(payload);
 
     return res.json(result);
   }
@@ -21,8 +20,7 @@ const createTask = asyncHandler(
 const getTasksAll = asyncHandler(
   async (req: Request, res: Response): Promise<any> => {
     const payload: TaskDto = req.body;
-    const { refreshToken }: TokenDto = req.cookies;
-    const result = await service.getTasksAll({ refreshToken }, payload);
+    const result = await service.getTasksAll(payload);
 
     return res.json(result);
   }
@@ -31,8 +29,7 @@ const getTasksAll = asyncHandler(
 const deleteTask = asyncHandler(
   async (req: Request, res: Response): Promise<any> => {
     const payload = req.body;
-    const { refreshToken }: TokenDto = req.cookies;
-    const result = await service.deleteTask({ refreshToken }, payload);
+    const result = await service.deleteTask(payload);
 
     return res.json(result);
   }
