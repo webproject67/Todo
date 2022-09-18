@@ -14,5 +14,6 @@ usersRouter.post('/sign', userController.signIn);
 usersRouter.delete('/sign', userController.signOut);
 usersRouter.get('/', userController.getUsersAll);
 usersRouter.delete('/', userController.deleteUser);
+usersRouter.get('/activate/:id', userController.activateUser);
 
 export default usersRouter;

@@ -28,6 +28,10 @@ const User = sequelize.define<IUser>('User', {
     type: DataTypes.ENUM(Role.User, Role.Admin),
     defaultValue: Role.User,
   },
+  isActivated: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+  },
 });
 
 export default User;

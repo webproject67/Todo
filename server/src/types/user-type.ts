@@ -7,6 +7,7 @@ type UserAttributes = {
   password: string;
   id?: number;
   role?: Role.Admin | Role.User;
+  isActivated?: boolean;
   createdAt?: Date;
   updatedAt?: Date;
 };
@@ -14,6 +15,10 @@ type UserAttributes = {
 type UserInput = Optional<UserAttributes, 'uuid'>;
 
 type UserOuput = Required<UserAttributes>;
+
+type UserLinkActivate = Pick<UserAttributes, 'uuid'>;
+
+type UserUpdateActivate = Pick<UserAttributes, 'uuid' | 'isActivated'>;
 
 type UsersAndCountAll = {
   rows: UserOuput[];
@@ -34,6 +39,8 @@ export {
   UserAttributes,
   UserInput,
   UserOuput,
+  UserLinkActivate,
+  UserUpdateActivate,
   UsersAndCountAll,
   UserOuputJwt,
   UserCreate,

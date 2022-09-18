@@ -5,9 +5,11 @@ import * as userDal from '../dals/user-dal';
 import {
   UserInput,
   UserOuput,
+  UserLinkActivate,
   UsersAndCountAll,
   UserOuputJwt,
   UserCreate,
+  UserUpdateActivate,
 } from '../../types/user-type';
 import { TokenInput } from '../../types/token-type';
 import checkRole from '../../utils/check-role';
@@ -59,6 +61,11 @@ const getUserByEmail = async (
   };
 };
 
+const getUserByUuid = async (payload: UserLinkActivate): Promise<void> => {
+  const candidate = await userDal.getUserByUuid(payload);
+  if (!candidate) throw createError(401, `Неккоректная ссылка активации`);
+};
+
 const getUsersAll = async (
   refreshToken: TokenInput
 ): Promise<UsersAndCountAll> => {
@@ -76,4 +83,18 @@ const deleteUser = async (
   return userDal.deleteUser(payload);
 };
 
-export { createUser, getUserByEmail, getUsersAll, deleteUser };
+const updateUserActivated = async (
+  payload: UserUpdateActivate
+): Promise<boolean> => {
+  const isUpdateActivated = await userDal.updateUserActivated(payload);
+  return isUpdateActivated;
+};
+
+export {
+  createUser,
+  getUserByEmail,
+  getUserByUuid,
+  getUsersAll,
+  deleteUser,
+  updateUserActivated,
+};

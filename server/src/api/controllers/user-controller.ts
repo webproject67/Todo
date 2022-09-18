@@ -7,6 +7,9 @@ import * as tokenService from '../../db/services/token-service';
 import { UserDto, TokenDto } from '../dtos';
 import { TypeTextField } from '../../utils/const';
 import createCookie from '../../utils/create-cookie';
+import sendMail from '../../mailer/nodemailer';
+
+const urlClient = process.env.URL_CLIENT as string;
 
 const signUp = asyncHandler(
   async (req: Request, res: Response): Promise<any> => {
@@ -20,6 +23,11 @@ const signUp = asyncHandler(
     const result = await userService.createUser(payload);
 
     createCookie(res, result);
+
+    sendMail(
+      result.candidate.email,
+      `${process.env.URL_API}/api/v1/users/activate/${result.candidate.uuid}`
+    );
 
     return res.json(result);
   }
@@ -66,4 +74,14 @@ const deleteUser = asyncHandler(
   }
 );
 
-export { signUp, signIn, signOut, getUsersAll, deleteUser };
+const activateUser = asyncHandler(
+  async (req: Request, res: Response): Promise<any> => {
+    const uuid: string = req.params.id;
+    await userService.getUserByUuid({ uuid });
+    await userService.updateUserActivated({ isActivated: true, uuid });
+
+    return res.redirect(urlClient);
+  }
+);
+
+export { signUp, signIn, signOut, getUsersAll, deleteUser, activateUser };
