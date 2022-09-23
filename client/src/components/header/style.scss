@@ -1,0 +1,23 @@
+@import '../../sass/variables';
+
+.Header {
+  background-color: #efefef;
+
+  &-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: $width-max;
+    margin: 0 auto;
+    padding: 16px 50px;
+  }
+
+  &-logo {
+    font-size: 24px;
+    text-transform: uppercase;
+  }
+
+  &-dashboard {
+    margin: 0 20px;
+  }
+}

@@ -1,0 +1,13 @@
+.ProfileCard {
+  &-title {
+    text-align: center;
+  }
+
+  &-text {
+    margin: 20px 0;
+
+    &_fontWeight_bold {
+      font-weight: 700;
+    }
+  }
+}

@@ -1,0 +1,46 @@
+.TaskList {
+  &-title {
+    margin: 40px 0;
+  }
+
+  &-list {
+    margin: 40px 0;
+    list-style: none;
+  }
+
+  &-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+
+    &:nth-child(odd) {
+      background-color: #efefef;
+    }
+  }
+
+  &-text {
+    padding-bottom: 10px;
+
+    &_underlined {
+      text-decoration: line-through;
+    }
+  }
+
+  &-date {
+    font-size: 10px;
+  }
+
+  &-btns {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 60px;
+  }
+
+  &-btn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+}

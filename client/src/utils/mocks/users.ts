@@ -1,0 +1,57 @@
+const users = {
+  count: 6,
+  rows: [
+    {
+      uuid: '630ff8d9-930a-419f-9b48-ed173965801a',
+      email: '1@gmail.com',
+      password: '$2b$15$xpIpCnORBftRGcTkrklR1uVFU46UIF0e/oduLNfdFj0Hnbl0ZcVBG',
+      id: 4,
+      role: 'user',
+      isActivated: false,
+      createdAt: '2022-09-18T11:20:10.823Z',
+      updatedAt: '2022-09-18T11:20:10.823Z',
+    },
+    {
+      uuid: '0b7094e3-5269-4324-b0c1-9e15da3fde0a',
+      email: '3@gmail.com',
+      password: '$2b$15$MXlThsxJi88.5P3066R0IeWN3EAh4NyaopgqZrruqDt2Zt1wk/ByG',
+      id: 6,
+      role: 'superAdmin',
+      isActivated: true,
+      createdAt: '2022-09-18T11:20:35.051Z',
+      updatedAt: '2022-09-18T11:20:35.051Z',
+    },
+    {
+      uuid: 'ae18726c-cac9-41aa-8acb-cd2a66086bd2',
+      email: '2@gmail.com',
+      password: '$2b$15$GUA.DuO2A0v.w6audVGoLu7mYNPHSUEY5PyFGzauAFGSbarxe98yq',
+      id: 7,
+      role: 'user',
+      isActivated: false,
+      createdAt: '2022-09-22T14:28:36.488Z',
+      updatedAt: '2022-09-22T14:28:36.488Z',
+    },
+    {
+      uuid: 'ffada5f3-dd36-4e73-81c4-3a321cf57460',
+      email: '4@gmail.com',
+      password: '$2b$15$nLPkAq5qR3PlQkro/O6tguZpvXGhXQOzwcIy2me8B.sa72V8ssQjW',
+      id: 8,
+      role: 'user',
+      isActivated: false,
+      createdAt: '2022-09-22T14:29:01.270Z',
+      updatedAt: '2022-09-22T14:29:01.270Z',
+    },
+    {
+      uuid: 'abc96ad9-3c78-4037-a58d-2899ded94dae',
+      email: '5@gmail.com',
+      password: '$2b$15$r89YoFdfEmT7JuN3NfUWS.mN4D4EmGW24ku2IoGqL1I9hjxDfNOde',
+      id: 9,
+      role: 'user',
+      isActivated: false,
+      createdAt: '2022-09-22T14:29:11.962Z',
+      updatedAt: '2022-09-22T14:29:11.962Z',
+    },
+  ],
+};
+
+export default users;
