@@ -35,7 +35,7 @@ type UserCreate = {
   token: UserOuputJwt;
 };
 
-export {
+export type {
   UserAttributes,
   UserInput,
   UserOuput,

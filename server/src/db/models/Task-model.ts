@@ -14,6 +14,10 @@ const Task = sequelize.define<ITask>('Task', {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  isClosed: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+  },
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,

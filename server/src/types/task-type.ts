@@ -3,6 +3,7 @@ import { Optional } from 'sequelize';
 type TaskAttributes = {
   uuid: string;
   task: string;
+  isClosed?: boolean;
   id?: number;
   createdAt?: Date;
   updatedAt?: Date;
@@ -18,4 +19,4 @@ type TasksAndCountAll = {
   count: number;
 };
 
-export { TaskAttributes, TaskInput, TaskOuput, TasksAndCountAll };
+export type { TaskAttributes, TaskInput, TaskOuput, TasksAndCountAll };

@@ -13,4 +13,4 @@ type TokenInput = Optional<TokenAttributes, 'uuid'>;
 
 type TokenOuput = Required<TokenAttributes>;
 
-export { TokenAttributes, TokenInput, TokenOuput };
+export type { TokenAttributes, TokenInput, TokenOuput };

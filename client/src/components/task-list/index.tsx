@@ -8,7 +8,11 @@ import tasks from '../../utils/mocks/tasks';
 import convertDate from '../../utils/convert-date';
 import './style.scss';
 
-function TaskList(): JSX.Element {
+interface ITaskList {
+  onClick: () => void;
+}
+
+function TaskList({ onClick }: ITaskList): JSX.Element {
   const cn = bem('TaskList');
 
   return (
@@ -18,7 +22,7 @@ function TaskList(): JSX.Element {
         {tasks.rows.map((elem, i) => (
           <li className={cn('item')} key={elem.uuid}>
             <div className={cn('texts')}>
-              <p className={cn('text', { underlined: elem.isClose })}>
+              <p className={cn('text', { underlined: elem.isClosed })}>
                 {i + 1}. {elem.task}
               </p>
               <p className={cn('date')}>
@@ -30,12 +34,12 @@ function TaskList(): JSX.Element {
             </div>
             <div className={cn('btns')}>
               <span className={cn('btn')}>
-                <Button>
-                  {elem.isClose ? <TaskAltIcon /> : <CloseIcon />}
+                <Button onClick={onClick}>
+                  {elem.isClosed ? <TaskAltIcon /> : <CloseIcon />}
                 </Button>
               </span>
               <span className={cn('btn')}>
-                <Button>
+                <Button onClick={onClick}>
                   <DeleteIcon />
                 </Button>
               </span>
