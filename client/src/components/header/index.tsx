@@ -18,11 +18,11 @@ function Header(): JSX.Element {
           <Link href={AppRoute.Profile}>user@gmail.com</Link>
           <span className={cn('dashboard')}>
             <Link href={AppRoute.Dashboard} underline="none">
-              <Button text="Админ панель" />
+              <Button>Админ панель</Button>
             </Link>
           </span>
           <Link href={AppRoute.SignIn} underline="none">
-            <Button text="Войти" />
+            <Button>Войти</Button>
           </Link>
         </div>
       </div>

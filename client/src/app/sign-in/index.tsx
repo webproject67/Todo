@@ -2,7 +2,7 @@ import React from 'react';
 import Header from '../../components/header';
 import LayoutMain from '../../components/layout-main';
 import LayoutCentering from '../../components/layout-centering';
-import Auth from '../../components/auth';
+import AuthContainer from '../../containers/auth';
 
 function SignIn(): JSX.Element {
   return (
@@ -10,7 +10,7 @@ function SignIn(): JSX.Element {
       <Header />
       <LayoutMain>
         <LayoutCentering>
-          <Auth />
+          <AuthContainer />
         </LayoutCentering>
       </LayoutMain>
     </>

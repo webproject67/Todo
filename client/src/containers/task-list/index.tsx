@@ -3,13 +3,15 @@ import { cn as bem } from '@bem-react/classname';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
-import Button from '../button';
+import Button from '../../components/button';
 import tasks from '../../utils/mocks/tasks';
 import convertDate from '../../utils/convert-date';
 import './style.scss';
 
 function TaskList(): JSX.Element {
   const cn = bem('TaskList');
+
+  const onClick = () => null;
 
   return (
     <div className={cn()}>
@@ -30,12 +32,12 @@ function TaskList(): JSX.Element {
             </div>
             <div className={cn('btns')}>
               <span className={cn('btn')}>
-                <Button>
+                <Button onClick={onClick}>
                   {elem.isClose ? <TaskAltIcon /> : <CloseIcon />}
                 </Button>
               </span>
               <span className={cn('btn')}>
-                <Button>
+                <Button onClick={onClick}>
                   <DeleteIcon />
                 </Button>
               </span>

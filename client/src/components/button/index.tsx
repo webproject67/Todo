@@ -1,16 +1,22 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import Button from '@mui/material/Button';
 
 interface IMyButton {
-  text: string;
+  children: string | ReactNode;
   type?: 'button' | 'submit';
   variant?: 'outlined' | 'contained';
+  onClick?: () => void;
 }
 
-function MyButton({ text, type, variant }: IMyButton): JSX.Element {
+function MyButton({
+  children,
+  type,
+  variant,
+  onClick,
+}: IMyButton): JSX.Element {
   return (
-    <Button variant={variant} type={type}>
-      {text}
+    <Button variant={variant} type={type} onClick={onClick}>
+      {children}
     </Button>
   );
 }
@@ -18,6 +24,7 @@ function MyButton({ text, type, variant }: IMyButton): JSX.Element {
 MyButton.defaultProps = {
   type: 'button',
   variant: 'outlined',
+  onClick: () => null,
 };
 
 export default MyButton;
