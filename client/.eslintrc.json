@@ -18,5 +18,8 @@
     "sourceType": "module"
   },
   "plugins": ["react", "@typescript-eslint", "react-hooks"],
-  "rules": {}
+  "rules": {
+    "no-param-reassign": 0,
+    "import/no-cycle": 0
+  }
 }

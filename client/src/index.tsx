@@ -1,18 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
 import { StyledEngineProvider } from '@mui/material/styles';
+import { ToastContainer } from 'react-toastify';
+import store from './store';
 import App from './app';
 import reportWebVitals from './reportWebVitals';
 import './sass/style.scss';
+import 'react-toastify/dist/ReactToastify.css';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <StyledEngineProvider injectFirst>
-      <App />
-    </StyledEngineProvider>
+    <Provider store={store}>
+      <StyledEngineProvider injectFirst>
+        <ToastContainer />
+        <App />
+      </StyledEngineProvider>
+    </Provider>
   </React.StrictMode>
 );
 

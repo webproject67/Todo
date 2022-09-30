@@ -4,14 +4,14 @@ import { OnChangeType } from '../../types/event-type';
 
 function UserSelectContainer(): JSX.Element {
   const [data, setData] = useState({
-    user: '',
+    email: '',
   });
 
   const onChange: OnChangeType = (name, value) => {
     setData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  return <UserSelect name="user" data={data} onChange={onChange} />;
+  return <UserSelect name="email" data={data} onChange={onChange} />;
 }
 
 export default UserSelectContainer;

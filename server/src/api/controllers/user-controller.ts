@@ -35,6 +35,12 @@ const signUp = asyncHandler(
 
 const signIn = asyncHandler(
   async (req: Request, res: Response): Promise<any> => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty() && errors.array()[0].param === TypeTextField.Email)
+      throw createError(401, 'Введите корректный email');
+    if (!errors.isEmpty() && errors.array()[0].param === TypeTextField.Password)
+      throw createError(401, 'Пароль должен содержать не менее 6 символов');
+
     const payload: UserDto = req.body;
     const result = await userService.getUserByEmail(payload, true);
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { cn as bem } from '@bem-react/classname';
-import AppRoute from '../../utils/const';
+import { AppRoute } from '../../utils/const';
 import Link from '../link';
 import Button from '../button';
 import './style.scss';

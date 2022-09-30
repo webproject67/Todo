@@ -1,19 +1,20 @@
 import React from 'react';
 import { cn as bem } from '@bem-react/classname';
 import { useLocation } from 'react-router-dom';
-import AppRoute from '../../utils/const';
+import { AppRoute } from '../../utils/const';
 import Link from '../link';
 import Button from '../button';
 import TextField from '../text-field';
-import AuthInput from '../../types/auth-type';
+import { UserInput } from '../../types/user-type';
 import { OnChangeType, OnSubmitType } from '../../types/event-type';
 import './style.scss';
 
 interface IAuth {
-  data: AuthInput;
+  data: UserInput;
   events: {
     onChange: OnChangeType;
-    onSubmit: OnSubmitType;
+    onSubmitSignUp: OnSubmitType;
+    onSubmitSignIn: OnSubmitType;
   };
 }
 
@@ -23,14 +24,17 @@ function Auth({ data, events }: IAuth): JSX.Element {
   const isLogin = location.pathname === AppRoute.SignIn;
 
   return (
-    <form className={cn()} onSubmit={events.onSubmit}>
+    <form
+      className={cn()}
+      onSubmit={isLogin ? events.onSubmitSignIn : events.onSubmitSignUp}
+    >
       <h2 className={cn('title')}>{isLogin ? 'Войти' : 'Регистрация'}</h2>
       <div className={cn('textField')}>
         <TextField
           label="Логин"
           type="email"
-          name="login"
-          value={data.login}
+          name="email"
+          value={data.email}
           onChange={events.onChange}
         />
       </div>

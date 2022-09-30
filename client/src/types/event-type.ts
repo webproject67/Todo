@@ -1,10 +1,9 @@
 import { FormEvent } from 'react';
-import AuthInput from './auth-type';
 import TaskInput from './task-type';
-import UserInput from './user-type';
+import { UserInput } from './user-type';
 
 type OnChangeType = (
-  name: keyof AuthInput | keyof TaskInput | keyof UserInput,
+  name: keyof UserInput | keyof TaskInput,
   value: string
 ) => void;
 

@@ -1,12 +1,12 @@
 import React, { ChangeEvent } from 'react';
 import TextField from '@mui/material/TextField';
-import AuthInput from '../../types/auth-type';
+import { UserInput } from '../../types/user-type';
 import TaskInput from '../../types/task-type';
 import { OnChangeType } from '../../types/event-type';
 
 interface IMyTextField {
   label: string;
-  name: keyof AuthInput | keyof TaskInput;
+  name: keyof UserInput | keyof TaskInput;
   value: string;
   type?: 'text' | 'email' | 'password';
   onChange: OnChangeType;

@@ -6,4 +6,14 @@ enum AppRoute {
   Dashboard = '/dashboard',
 }
 
-export default AppRoute;
+enum Role {
+  User = 'user',
+  Admin = 'admin',
+  SuperAdmin = 'superAdmin',
+}
+
+enum NameSpace {
+  UserData = 'userData',
+}
+
+export { AppRoute, Role, NameSpace };

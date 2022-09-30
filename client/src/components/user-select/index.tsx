@@ -6,13 +6,13 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '../button';
 import users from '../../utils/mocks/users';
-import UserInput from '../../types/user-type';
+import { UserInputSelect } from '../../types/user-type';
 import { OnChangeType } from '../../types/event-type';
 import './style.scss';
 
 interface IUserSelect {
-  name: keyof UserInput;
-  data: UserInput;
+  name: keyof UserInputSelect;
+  data: UserInputSelect;
   onChange: OnChangeType;
 }
 
@@ -33,7 +33,7 @@ function UserSelect({ name, data, onChange }: IUserSelect): JSX.Element {
             labelId="email"
             label="Пользователь"
             name={name}
-            value={data.user}
+            value={data.email}
             onChange={handleChange}
           >
             {users.rows.map((elem) => (

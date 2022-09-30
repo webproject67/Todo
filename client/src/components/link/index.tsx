@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import Link from '@mui/material/Link';
-import AppRoute from '../../utils/const';
+import { AppRoute } from '../../utils/const';
 
 interface IMyLink {
   href:

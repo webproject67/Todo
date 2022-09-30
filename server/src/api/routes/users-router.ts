@@ -12,7 +12,12 @@ usersRouter.post(
   body('password').trim().isLength({ min: 6 }),
   userController.signUp
 );
-usersRouter.post('/sign', userController.signIn);
+usersRouter.post(
+  '/sign',
+  body('email').trim().normalizeEmail().isEmail(),
+  body('password').trim().isLength({ min: 6 }),
+  userController.signIn
+);
 usersRouter.delete('/sign', userController.signOut);
 usersRouter.get(
   '/',
