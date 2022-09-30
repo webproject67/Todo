@@ -7,4 +7,7 @@ const getUser = (state: State): UserCreate => state[NameSpace.UserData].user;
 const getLoadedUserData = (state: State): boolean =>
   state[NameSpace.UserData].isLoaded;
 
-export { getUser, getLoadedUserData };
+const getAuthorization = (state: State): boolean =>
+  state[NameSpace.UserData].isAuthorization;
+
+export { getUser, getLoadedUserData, getAuthorization };
