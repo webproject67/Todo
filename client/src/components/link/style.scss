@@ -1,0 +1,12 @@
+@import '../../sass/variables';
+
+.Link {
+  color: $color-link;
+  text-decoration: none;
+
+  &_underline_hover {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

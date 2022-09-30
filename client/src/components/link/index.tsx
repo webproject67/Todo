@@ -1,6 +1,8 @@
 import React, { ReactNode } from 'react';
-import Link from '@mui/material/Link';
+import { cn as bem } from '@bem-react/classname';
+import { Link } from 'react-router-dom';
 import { AppRoute } from '../../utils/const';
+import './style.scss';
 
 interface IMyLink {
   href:
@@ -14,8 +16,10 @@ interface IMyLink {
 }
 
 function MyLink({ href, underline, children }: IMyLink): JSX.Element {
+  const cn = bem('Link');
+
   return (
-    <Link underline={underline} href={href}>
+    <Link className={cn({ underline })} to={href}>
       {children}
     </Link>
   );
