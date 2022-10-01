@@ -36,6 +36,8 @@ type UserCreate = {
   token: UserOuputJwt;
 };
 
+type UserCandidate = Pick<UserCreate, 'candidate'>['candidate'];
+
 export type {
   UserAttributes,
   UserInputSelect,
@@ -46,4 +48,5 @@ export type {
   UsersAndCountAll,
   UserOuputJwt,
   UserCreate,
+  UserCandidate,
 };

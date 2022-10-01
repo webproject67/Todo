@@ -1,8 +1,9 @@
 import { NameSpace } from '../../utils/const';
 import { State } from '../../types/state-type';
-import { UserCreate } from '../../types/user-type';
+import { UserOuput } from '../../types/user-type';
 
-const getUser = (state: State): UserCreate => state[NameSpace.UserData].user;
+const getCandidate = (state: State): UserOuput =>
+  state[NameSpace.UserData].user.candidate;
 
 const getLoadedUserData = (state: State): boolean =>
   state[NameSpace.UserData].isLoaded;
@@ -10,4 +11,4 @@ const getLoadedUserData = (state: State): boolean =>
 const getAuthorization = (state: State): boolean =>
   state[NameSpace.UserData].isAuthorization;
 
-export { getUser, getLoadedUserData, getAuthorization };
+export { getCandidate, getLoadedUserData, getAuthorization };

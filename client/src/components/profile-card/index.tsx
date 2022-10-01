@@ -1,8 +1,13 @@
 import React from 'react';
 import { cn as bem } from '@bem-react/classname';
+import { UserCandidate } from '../../types/user-type';
 import './style.scss';
 
-function ProfileCard(): JSX.Element {
+interface IProfileCard {
+  candidate: UserCandidate;
+}
+
+function ProfileCard({ candidate }: IProfileCard): JSX.Element {
   const cn = bem('ProfileCard');
 
   return (
@@ -10,21 +15,21 @@ function ProfileCard(): JSX.Element {
       <h2 className={cn('title')}>Мой профиль</h2>
       <p className={cn('text')}>
         <span className={cn('text', { fontWeight: 'bold' })}>Id: </span>
-        123465789
+        {candidate.uuid}
       </p>
       <p className={cn('text')}>
         <span className={cn('text', { fontWeight: 'bold' })}>Email: </span>
-        user@gmail.com
+        {candidate.email}
       </p>
       <p className={cn('text')}>
         <span className={cn('text', { fontWeight: 'bold' })}>
           Email confirmed:{' '}
         </span>
-        false
+        {candidate.isActivated ? 'true' : 'false'}
       </p>
       <p className={cn('text')}>
         <span className={cn('text', { fontWeight: 'bold' })}>Role: </span>
-        user
+        {candidate.role}
       </p>
     </div>
   );

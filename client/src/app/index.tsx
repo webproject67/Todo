@@ -1,5 +1,4 @@
-import React, { CSSProperties } from 'react';
-import ClockLoader from 'react-spinners/ClockLoader';
+import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Root from './root';
 import SignUp from './sign-up';
@@ -9,30 +8,14 @@ import Dashboard from './dashboard';
 import { AppRoute } from '../utils/const';
 import { useAppSelector } from '../hooks';
 import { getLoadedUserData } from '../store/user-data/selectors';
-import LayoutModal from '../components/layout-modal';
-
-const override: CSSProperties = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-};
+import Spinner from '../components/spinner';
 
 function App(): JSX.Element {
   const isLoadedUserData = useAppSelector(getLoadedUserData);
 
   return (
     <BrowserRouter>
-      {isLoadedUserData && (
-        <LayoutModal>
-          <ClockLoader
-            loading={isLoadedUserData}
-            cssOverride={override}
-            size={150}
-            color="#ffffff"
-          />
-        </LayoutModal>
-      )}
+      {isLoadedUserData && <Spinner isLoaded={isLoadedUserData} />}
       <Routes>
         <Route path={AppRoute.Root} element={<Root />} />
         <Route path={AppRoute.SignUp} element={<SignUp />} />
