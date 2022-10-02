@@ -15,8 +15,11 @@ const upload = multer();
 
 dbInit();
 
-app.use(cors());
-app.use(cookieParser());
+app.use(cors({
+  credentials: true,
+  origin: process.env.URL_CLIENT
+}));
+app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(helmet());
 app.use(compression());
 app.use(bodyParser.json());

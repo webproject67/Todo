@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { NameSpace, Role } from '../../utils/const';
 import { User } from '../../types/state-type';
-import { signUpAction, signInAction } from '../api-actions';
+import { signUpAction, signInAction, signOutAction } from '../api-actions';
 import { UserCreate } from '../../types/user-type';
 
 const initialState: User = {
@@ -60,6 +60,17 @@ const user = createSlice({
       .addCase(signInAction.rejected, (state) => {
         state.isLoaded = false;
         state.isAuthorization = false;
+      })
+      .addCase(signOutAction.pending, (state) => {
+        state.isLoaded = true;
+      })
+      .addCase(signOutAction.fulfilled, (state) => {
+        state.isLoaded = false;
+        state.isAuthorization = false;
+      })
+      .addCase(signOutAction.rejected, (state) => {
+        state.isLoaded = false;
+        state.isAuthorization = true;
       });
   },
 });

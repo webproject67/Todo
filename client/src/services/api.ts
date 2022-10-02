@@ -3,11 +3,10 @@ import { toast } from 'react-toastify';
 import { getToken } from './token';
 
 const BACKEND_URL = 'http://localhost:5000/api/v1';
-const REQUEST_TIMEOUT = 5000;
 
 const api = axios.create({
+  withCredentials: true,
   baseURL: BACKEND_URL,
-  timeout: REQUEST_TIMEOUT,
 });
 
 api.interceptors.request.use((config: AxiosRequestConfig) => {
