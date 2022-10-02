@@ -5,13 +5,15 @@ import Link from '../link';
 import Button from '../button';
 import './style.scss';
 import { UserCandidate } from '../../types/user-type';
+import { OnClickType } from '../../types/event-type';
 
 interface IHeader {
   candidate: UserCandidate;
   isAuthorization: boolean;
+  onClick: OnClickType;
 }
 
-function Header({ candidate, isAuthorization }: IHeader): JSX.Element {
+function Header({ candidate, isAuthorization, onClick }: IHeader): JSX.Element {
   const cn = bem('Header');
 
   return (
@@ -32,7 +34,7 @@ function Header({ candidate, isAuthorization }: IHeader): JSX.Element {
             </span>
           )}
           {isAuthorization ? (
-            <Button>Выйти</Button>
+            <Button onClick={onClick}>Выйти</Button>
           ) : (
             <Link href={AppRoute.SignIn} underline="none">
               <Button>Войти</Button>

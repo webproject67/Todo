@@ -9,4 +9,6 @@ type OnChangeType = (
 
 type OnSubmitType = (evt: FormEvent<HTMLFormElement>) => void;
 
-export type { OnChangeType, OnSubmitType };
+type OnClickType = () => void;
+
+export type { OnChangeType, OnSubmitType, OnClickType };
