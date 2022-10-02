@@ -4,10 +4,13 @@ import { Provider } from 'react-redux';
 import { StyledEngineProvider } from '@mui/material/styles';
 import { ToastContainer } from 'react-toastify';
 import store from './store';
+import { checkAuthAction } from './store/api-actions';
 import App from './app';
 import reportWebVitals from './reportWebVitals';
 import './sass/style.scss';
 import 'react-toastify/dist/ReactToastify.css';
+
+store.dispatch(checkAuthAction());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

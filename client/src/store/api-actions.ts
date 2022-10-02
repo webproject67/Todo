@@ -31,4 +31,14 @@ const signOutAction = createAsyncThunk<void, undefined>(
   }
 );
 
-export { signUpAction, signInAction, signOutAction };
+const checkAuthAction = createAsyncThunk<UserCreate, undefined>(
+  'refreshToken',
+  async () => {
+    const { data } = await api.get<UserCreate>('tokens');
+    saveToken(data.token.accessToken);
+
+    return data;
+  }
+);
+
+export { signUpAction, signInAction, signOutAction, checkAuthAction };

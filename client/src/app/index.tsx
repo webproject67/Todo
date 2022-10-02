@@ -5,13 +5,15 @@ import SignUp from './sign-up';
 import SignIn from './sign-in';
 import Profile from './profile';
 import Dashboard from './dashboard';
-import { AppRoute } from '../utils/const';
+import NotFoundScreen from './page-not-found';
+import { AppRoute, Role } from '../utils/const';
 import { useAppSelector } from '../hooks';
-import { getLoadedUserData } from '../store/user-data/selectors';
+import { getLoadedUserData, getCandidate } from '../store/user-data/selectors';
 import Spinner from '../components/spinner';
 
 function App(): JSX.Element {
   const isLoadedUserData = useAppSelector(getLoadedUserData);
+  const candidate = useAppSelector(getCandidate);
 
   return (
     <BrowserRouter>
@@ -21,7 +23,10 @@ function App(): JSX.Element {
         <Route path={AppRoute.SignUp} element={<SignUp />} />
         <Route path={AppRoute.SignIn} element={<SignIn />} />
         <Route path={AppRoute.Profile} element={<Profile />} />
-        <Route path={AppRoute.Dashboard} element={<Dashboard />} />
+        {candidate.role !== Role.User && (
+          <Route path={AppRoute.Dashboard} element={<Dashboard />} />
+        )}
+        <Route path="*" element={<NotFoundScreen />} />
       </Routes>
     </BrowserRouter>
   );

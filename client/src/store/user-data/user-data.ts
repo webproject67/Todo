@@ -1,7 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { NameSpace, Role } from '../../utils/const';
 import { User } from '../../types/state-type';
-import { signUpAction, signInAction, signOutAction } from '../api-actions';
+import {
+  signUpAction,
+  signInAction,
+  signOutAction,
+  checkAuthAction,
+} from '../api-actions';
 import { UserCreate } from '../../types/user-type';
 
 const initialState: User = {
@@ -71,6 +76,21 @@ const user = createSlice({
       .addCase(signOutAction.rejected, (state) => {
         state.isLoaded = false;
         state.isAuthorization = true;
+      })
+      .addCase(checkAuthAction.pending, (state) => {
+        state.isLoaded = true;
+      })
+      .addCase(
+        checkAuthAction.fulfilled,
+        (state, action: PayloadAction<UserCreate>) => {
+          state.user = action.payload;
+          state.isLoaded = false;
+          state.isAuthorization = true;
+        }
+      )
+      .addCase(checkAuthAction.rejected, (state) => {
+        state.isLoaded = false;
+        state.isAuthorization = false;
       });
   },
 });
