@@ -1,7 +1,7 @@
 import React, { ChangeEvent } from 'react';
 import TextField from '@mui/material/TextField';
 import { UserInput } from '../../types/user-type';
-import TaskInput from '../../types/task-type';
+import { TaskInput } from '../../types/task-type';
 import { OnChangeType } from '../../types/event-type';
 
 interface IMyTextField {
@@ -20,7 +20,7 @@ function MyTextField({
   onChange,
 }: IMyTextField): JSX.Element {
   const handleChange = (evt: ChangeEvent<HTMLInputElement>): void => {
-    onChange(name, evt.target.value);
+    onChange(evt.target.value, name);
   };
 
   return (

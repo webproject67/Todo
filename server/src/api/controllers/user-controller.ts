@@ -71,7 +71,7 @@ const getUsersAll = asyncHandler(
 
 const deleteUser = asyncHandler(
   async (req: Request, res: Response): Promise<any> => {
-    const payload: UserDto = req.body;
+    const payload = String(req.query.uuid);
     const result = await userService.deleteUser(payload);
 
     return res.json(result);

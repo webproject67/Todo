@@ -4,22 +4,28 @@ import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '../button';
-import tasks from '../../utils/mocks/tasks';
 import convertDate from '../../utils/convert-date';
+import { TaskOuput, TasksAll } from '../../types/task-type';
 import './style.scss';
 
 interface ITaskList {
-  onClick: () => void;
+  tasks: TasksAll;
+  onClickDelete: (uuid: string) => void;
+  onClickClose: (elem: TaskOuput) => void;
 }
 
-function TaskList({ onClick }: ITaskList): JSX.Element {
+function TaskList({
+  tasks,
+  onClickDelete,
+  onClickClose,
+}: ITaskList): JSX.Element {
   const cn = bem('TaskList');
 
   return (
     <div className={cn()}>
       <h2 className={cn('title')}>Список дел:</h2>
       <ul className={cn('list')}>
-        {tasks.rows.map((elem, i) => (
+        {tasks.map((elem, i) => (
           <li className={cn('item')} key={elem.uuid}>
             <div className={cn('texts')}>
               <p className={cn('text', { underlined: elem.isClosed })}>
@@ -34,12 +40,12 @@ function TaskList({ onClick }: ITaskList): JSX.Element {
             </div>
             <div className={cn('btns')}>
               <span className={cn('btn')}>
-                <Button onClick={onClick}>
+                <Button onClick={() => onClickClose(elem)}>
                   {elem.isClosed ? <TaskAltIcon /> : <CloseIcon />}
                 </Button>
               </span>
               <span className={cn('btn')}>
-                <Button onClick={onClick}>
+                <Button onClick={() => onClickDelete(elem.uuid)}>
                   <DeleteIcon />
                 </Button>
               </span>

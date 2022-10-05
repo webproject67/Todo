@@ -13,5 +13,6 @@ tasksRouter.post(
 );
 tasksRouter.get('/', authMiddleware, taskController.getTasksAll);
 tasksRouter.delete('/', authMiddleware, taskController.deleteTask);
+tasksRouter.put('/', taskController.updateTask);
 
 export default tasksRouter;

@@ -31,8 +31,8 @@ const getUsersAll = async (): Promise<UsersAndCountAll> => {
   return candidates;
 };
 
-const deleteUser = async ({ email }: UserInput): Promise<boolean> => {
-  const isDelUser = await UserModel.destroy({ where: { email } });
+const deleteUser = async (uuid: string): Promise<boolean> => {
+  const isDelUser = await UserModel.destroy({ where: { uuid } });
   return !!isDelUser;
 };
 

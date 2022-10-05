@@ -2,7 +2,7 @@ import React from 'react';
 import { cn as bem } from '@bem-react/classname';
 import TextField from '../text-field';
 import Button from '../button';
-import TaskInput from '../../types/task-type';
+import { TaskInput } from '../../types/task-type';
 import { OnChangeType, OnSubmitType } from '../../types/event-type';
 import './style.scss';
 

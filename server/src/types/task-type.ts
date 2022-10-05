@@ -19,4 +19,12 @@ type TasksAndCountAll = {
   count: number;
 };
 
-export type { TaskAttributes, TaskInput, TaskOuput, TasksAndCountAll };
+type TaskUpdate = Required<Pick<TaskAttributes, 'isClosed' | 'uuid'>>;
+
+export type {
+  TaskAttributes,
+  TaskInput,
+  TaskOuput,
+  TasksAndCountAll,
+  TaskUpdate,
+};

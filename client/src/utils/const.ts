@@ -13,7 +13,9 @@ enum Role {
 }
 
 enum NameSpace {
+  UserProcess = 'userProcess',
   UserData = 'userData',
+  TaskData = 'taskData',
 }
 
 export { AppRoute, Role, NameSpace };

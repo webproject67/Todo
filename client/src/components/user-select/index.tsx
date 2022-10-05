@@ -5,22 +5,29 @@ import InputLabel from '@mui/material/InputLabel';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '../button';
-import users from '../../utils/mocks/users';
-import { UserInputSelect } from '../../types/user-type';
+import { UserOuput, UserInputSelect } from '../../types/user-type';
 import { OnChangeType } from '../../types/event-type';
 import './style.scss';
 
 interface IUserSelect {
   name: keyof UserInputSelect;
-  data: UserInputSelect;
+  candidates: UserOuput[];
+  value: string;
   onChange: OnChangeType;
+  onClick: () => void;
 }
 
-function UserSelect({ name, data, onChange }: IUserSelect): JSX.Element {
+function UserSelect({
+  name,
+  candidates,
+  value,
+  onChange,
+  onClick,
+}: IUserSelect): JSX.Element {
   const cn = bem('UserSelect');
 
   const handleChange = (event: SelectChangeEvent) => {
-    onChange(name, event.target.value);
+    onChange(event.target.value, name);
   };
 
   return (
@@ -33,11 +40,11 @@ function UserSelect({ name, data, onChange }: IUserSelect): JSX.Element {
             labelId="email"
             label="Пользователь"
             name={name}
-            value={data.email}
+            value={value}
             onChange={handleChange}
           >
-            {users.rows.map((elem) => (
-              <MenuItem key={elem.uuid} value={elem.email}>
+            {candidates.map((elem) => (
+              <MenuItem key={elem.uuid} value={elem.uuid}>
                 {elem.email}
               </MenuItem>
             ))}
@@ -45,7 +52,9 @@ function UserSelect({ name, data, onChange }: IUserSelect): JSX.Element {
         </FormControl>
       </div>
       <div className={cn('btn')}>
-        <Button variant="contained">Удалить пользователя</Button>
+        <Button variant="contained" onClick={onClick}>
+          Удалить пользователя
+        </Button>
       </div>
     </div>
   );

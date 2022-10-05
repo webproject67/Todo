@@ -19,7 +19,7 @@ function AuthContainer(): JSX.Element {
   });
 
   const callbacks: ICallbacks = {
-    onChange: (name, value) => {
+    onChange: (value, name) => {
       setData((prevData) => ({ ...prevData, [name]: value }));
     },
     onSubmitSignUp: (evt) => {

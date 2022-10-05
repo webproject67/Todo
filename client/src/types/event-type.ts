@@ -1,10 +1,10 @@
 import { FormEvent } from 'react';
-import TaskInput from './task-type';
+import { TaskInput } from './task-type';
 import { UserInput } from './user-type';
 
 type OnChangeType = (
-  name: keyof UserInput | keyof TaskInput,
-  value: string
+  value: string,
+  name: keyof UserInput | keyof TaskInput
 ) => void;
 
 type OnSubmitType = (evt: FormEvent<HTMLFormElement>) => void;

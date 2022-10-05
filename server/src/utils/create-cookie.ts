@@ -6,7 +6,7 @@ const createCookie = async (
   res: Response,
   result: UserCreate
 ): Promise<void> => {
-  res.cookie('todo-token', result.token.refreshToken, {
+  res.cookie('refreshToken', result.token.refreshToken, {
     maxAge: 30 * 24 * 60 * 60 * 1000,
     httpOnly: true,
   });

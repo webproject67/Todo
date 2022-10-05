@@ -67,7 +67,7 @@ const getUserByUuid = async (payload: UserLinkActivate): Promise<void> => {
 const getUsersAll = async (): Promise<UsersAndCountAll> =>
   userDal.getUsersAll();
 
-const deleteUser = async (payload: UserInput): Promise<boolean> =>
+const deleteUser = async (payload: string): Promise<boolean> =>
   userDal.deleteUser(payload);
 
 const updateUserActivated = async (

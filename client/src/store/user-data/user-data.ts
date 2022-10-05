@@ -5,9 +5,11 @@ import {
   signUpAction,
   signInAction,
   signOutAction,
+  getUsersAllAction,
+  deleteUserAction,
   checkAuthAction,
 } from '../api-actions';
-import { UserCreate } from '../../types/user-type';
+import { UserCreate, UsersAndCountAll } from '../../types/user-type';
 
 const initialState: User = {
   user: {
@@ -26,11 +28,15 @@ const initialState: User = {
       refreshToken: '',
     },
   },
+  users: {
+    rows: [],
+    count: 0,
+  },
   isLoaded: false,
   isAuthorization: false,
 };
 
-const user = createSlice({
+const userData = createSlice({
   name: NameSpace.UserData,
   initialState,
   reducers: {},
@@ -66,6 +72,19 @@ const user = createSlice({
         state.isLoaded = false;
         state.isAuthorization = false;
       })
+      .addCase(getUsersAllAction.pending, (state) => {
+        state.isLoaded = true;
+      })
+      .addCase(
+        getUsersAllAction.fulfilled,
+        (state, action: PayloadAction<UsersAndCountAll>) => {
+          state.isLoaded = false;
+          state.users = action.payload;
+        }
+      )
+      .addCase(getUsersAllAction.rejected, (state) => {
+        state.isLoaded = false;
+      })
       .addCase(signOutAction.pending, (state) => {
         state.isLoaded = true;
       })
@@ -76,6 +95,15 @@ const user = createSlice({
       .addCase(signOutAction.rejected, (state) => {
         state.isLoaded = false;
         state.isAuthorization = true;
+      })
+      .addCase(deleteUserAction.pending, (state) => {
+        state.isLoaded = true;
+      })
+      .addCase(deleteUserAction.fulfilled, (state) => {
+        state.isLoaded = false;
+      })
+      .addCase(deleteUserAction.rejected, (state) => {
+        state.isLoaded = false;
       })
       .addCase(checkAuthAction.pending, (state) => {
         state.isLoaded = true;
@@ -95,4 +123,4 @@ const user = createSlice({
   },
 });
 
-export default user;
+export default userData;

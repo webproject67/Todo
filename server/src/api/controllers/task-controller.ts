@@ -19,7 +19,7 @@ const createTask = asyncHandler(
 
 const getTasksAll = asyncHandler(
   async (req: Request, res: Response): Promise<any> => {
-    const payload: TaskDto = req.body;
+    const payload = String(req.query.UserUuid);
     const result = await service.getTasksAll(payload);
 
     return res.json(result);
@@ -28,11 +28,21 @@ const getTasksAll = asyncHandler(
 
 const deleteTask = asyncHandler(
   async (req: Request, res: Response): Promise<any> => {
-    const payload = req.body;
+    const payload = String(req.query.uuid);
     const result = await service.deleteTask(payload);
 
     return res.json(result);
   }
 );
 
-export { createTask, getTasksAll, deleteTask };
+const updateTask = asyncHandler(
+  async (req: Request, res: Response): Promise<any> => {
+    const isClosed = String(req.query.isClosed) === 'true';
+    const uuid = String(req.query.uuid);
+    const result = await service.updateTask({ isClosed, uuid });
+
+    return res.json(result);
+  }
+);
+
+export { createTask, getTasksAll, deleteTask, updateTask };
