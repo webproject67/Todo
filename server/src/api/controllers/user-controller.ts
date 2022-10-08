@@ -4,12 +4,10 @@ import createError from 'http-errors';
 import asyncHandler from 'express-async-handler';
 import * as userService from '../../db/services/user-service';
 import * as tokenService from '../../db/services/token-service';
-import { UserDto, TokenDto } from '../dtos';
-import { TypeTextField } from '../../utils/const';
+import { COOKIE_NAME, TypeTextField } from '../../utils/const';
 import createCookie from '../../utils/create-cookie';
 import sendMail from '../../mailer/nodemailer';
-
-const urlClient = process.env.URL_CLIENT as string;
+import { UserInput } from '../../types/user-type';
 
 const signUp = asyncHandler(
   async (req: Request, res: Response): Promise<any> => {
@@ -19,7 +17,7 @@ const signUp = asyncHandler(
     if (!errors.isEmpty() && errors.array()[0].param === TypeTextField.Password)
       throw createError(401, 'Пароль должен содержать не менее 6 символов');
 
-    const payload: UserDto = req.body;
+    const payload: UserInput = req.body;
     const result = await userService.createUser(payload);
 
     createCookie(res, result);
@@ -29,7 +27,7 @@ const signUp = asyncHandler(
       `${process.env.URL_API}/api/v1/users/activate/${result.candidate.uuid}`
     );
 
-    return res.json(result);
+    return res.json(result.accessToken);
   }
 );
 
@@ -41,23 +39,40 @@ const signIn = asyncHandler(
     if (!errors.isEmpty() && errors.array()[0].param === TypeTextField.Password)
       throw createError(401, 'Пароль должен содержать не менее 6 символов');
 
-    const payload: UserDto = req.body;
+    const payload: UserInput = req.body;
     const result = await userService.getUserByEmail(payload, true);
 
     createCookie(res, result);
 
-    return res.json(result);
+    return res.json(result.accessToken);
   }
 );
 
 const signOut = asyncHandler(
   async (req: Request, res: Response): Promise<any> => {
-    const { refreshToken }: TokenDto = req.cookies;
-    const result = await tokenService.deleteToken({ refreshToken });
+    const token = req.cookies[COOKIE_NAME];
+    await tokenService.deleteToken(token);
 
-    res.clearCookie('refreshToken');
+    res.clearCookie(COOKIE_NAME);
 
-    return res.json(result);
+    return res.json();
+  }
+);
+
+const checkAuth = asyncHandler(
+  async (req: Request, res: Response): Promise<any> => {
+    const token = req.cookies[COOKIE_NAME];
+    const userData = await tokenService.getUserData(token);
+
+    if (userData) {
+      const result = await userService.getUserByEmail(userData, false);
+
+      createCookie(res, result);
+
+      return res.json(result.accessToken);
+    }
+
+    return res.json();
   }
 );
 
@@ -72,20 +87,27 @@ const getUsersAll = asyncHandler(
 const deleteUser = asyncHandler(
   async (req: Request, res: Response): Promise<any> => {
     const payload = String(req.query.uuid);
-    const result = await userService.deleteUser(payload);
+    await userService.deleteUser(payload);
 
-    return res.json(result);
+    return res.json();
   }
 );
 
 const activateUser = asyncHandler(
   async (req: Request, res: Response): Promise<any> => {
     const uuid: string = req.params.id;
-    await userService.getUserByUuid({ uuid });
-    await userService.updateUserActivated({ isActivated: true, uuid });
+    await userService.updateUser({ isActivated: true, uuid });
 
-    return res.redirect(urlClient);
+    return res.redirect(String(process.env.URL_CLIENT));
   }
 );
 
-export { signUp, signIn, signOut, getUsersAll, deleteUser, activateUser };
+export {
+  signUp,
+  signIn,
+  signOut,
+  checkAuth,
+  getUsersAll,
+  deleteUser,
+  activateUser,
+};

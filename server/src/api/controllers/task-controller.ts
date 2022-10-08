@@ -3,17 +3,17 @@ import { validationResult } from 'express-validator';
 import createError from 'http-errors';
 import asyncHandler from 'express-async-handler';
 import * as service from '../../db/services/task-service';
-import { TaskDto } from '../dtos';
+import { TaskCreate } from '../../types/task-type';
 
 const createTask = asyncHandler(
   async (req: Request, res: Response): Promise<any> => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) throw createError(400, 'Введите задачу');
 
-    const payload: TaskDto = req.body;
-    const result = await service.createTask(payload);
+    const payload: TaskCreate = req.body;
+    await service.createTask(payload);
 
-    return res.json(result);
+    return res.json();
   }
 );
 
@@ -29,19 +29,25 @@ const getTasksAll = asyncHandler(
 const deleteTask = asyncHandler(
   async (req: Request, res: Response): Promise<any> => {
     const payload = String(req.query.uuid);
-    const result = await service.deleteTask(payload);
+    await service.deleteTask(payload);
 
-    return res.json(result);
+    return res.json();
   }
 );
 
 const updateTask = asyncHandler(
   async (req: Request, res: Response): Promise<any> => {
     const isClosed = String(req.query.isClosed) === 'true';
+    const priority = Number(req.query.priority);
     const uuid = String(req.query.uuid);
-    const result = await service.updateTask({ isClosed, uuid });
 
-    return res.json(result);
+    if (priority) {
+      await service.updateTaskPriority({ priority, uuid });
+    } else {
+      await service.updateTaskClose({ isClosed, uuid });
+    }
+
+    return res.json();
   }
 );
 

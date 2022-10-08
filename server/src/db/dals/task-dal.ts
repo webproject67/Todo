@@ -1,32 +1,45 @@
 import TaskModel from '../models/Task-model';
 import {
-  TaskInput,
-  TaskOuput,
+  TaskCreate,
   TasksAndCountAll,
-  TaskUpdate,
+  TaskUpdateClose,
+  TaskUpdatePriority,
 } from '../../types/task-type';
 
-const createTask = async (payload: TaskInput): Promise<TaskOuput> => {
-  const task = await TaskModel.create(payload);
-  return task;
+const createTask = async (payload: TaskCreate): Promise<void> => {
+  await TaskModel.create(payload);
 };
 
 const getTasksAll = async (UserUuid: string): Promise<TasksAndCountAll> => {
-  const tasks = await TaskModel.findAndCountAll({ where: { UserUuid } });
+  const tasks = await TaskModel.findAndCountAll({
+    where: { UserUuid },
+    order: ['isClosed', 'priority', 'updatedAt'],
+  });
   return tasks;
 };
 
-const deleteTask = async (uuid: string): Promise<boolean> => {
-  const isDelTask = await TaskModel.destroy({ where: { uuid } });
-  return !!isDelTask;
+const deleteTask = async (uuid: string): Promise<void> => {
+  await TaskModel.destroy({ where: { uuid } });
 };
 
-const updateTask = async ({ isClosed, uuid }: TaskUpdate): Promise<boolean> => {
-  const isUpdateClosed = await TaskModel.update(
-    { isClosed },
-    { where: { uuid } }
-  );
-  return !!isUpdateClosed;
+const updateTaskClose = async ({
+  isClosed,
+  uuid,
+}: TaskUpdateClose): Promise<void> => {
+  await TaskModel.update({ isClosed }, { where: { uuid } });
 };
 
-export { createTask, getTasksAll, deleteTask, updateTask };
+const updateTaskPriority = async ({
+  priority,
+  uuid,
+}: TaskUpdatePriority): Promise<void> => {
+  await TaskModel.update({ priority }, { where: { uuid } });
+};
+
+export {
+  createTask,
+  getTasksAll,
+  deleteTask,
+  updateTaskClose,
+  updateTaskPriority,
+};

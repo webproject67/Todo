@@ -1,21 +1,30 @@
 import * as taskDal from '../dals/task-dal';
 import {
-  TaskInput,
-  TaskOuput,
+  TaskCreate,
   TasksAndCountAll,
-  TaskUpdate,
+  TaskUpdateClose,
+  TaskUpdatePriority,
 } from '../../types/task-type';
 
-const createTask = async (payload: TaskInput): Promise<TaskOuput> =>
+const createTask = (payload: TaskCreate): Promise<void> =>
   taskDal.createTask(payload);
 
-const getTasksAll = async (payload: string): Promise<TasksAndCountAll> =>
+const getTasksAll = (payload: string): Promise<TasksAndCountAll> =>
   taskDal.getTasksAll(payload);
 
-const deleteTask = async (payload: string): Promise<boolean> =>
+const deleteTask = (payload: string): Promise<void> =>
   taskDal.deleteTask(payload);
 
-const updateTask = async (payload: TaskUpdate): Promise<boolean> =>
-  taskDal.updateTask(payload);
+const updateTaskClose = (payload: TaskUpdateClose): Promise<void> =>
+  taskDal.updateTaskClose(payload);
 
-export { createTask, getTasksAll, deleteTask, updateTask };
+const updateTaskPriority = (payload: TaskUpdatePriority): Promise<void> =>
+  taskDal.updateTaskPriority(payload);
+
+export {
+  createTask,
+  getTasksAll,
+  deleteTask,
+  updateTaskClose,
+  updateTaskPriority,
+};

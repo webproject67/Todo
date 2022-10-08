@@ -1,21 +1,24 @@
-import { DataTypes, Model } from 'sequelize';
+import { DataTypes, Model as Modelling } from 'sequelize';
 import sequelize from '../config';
 import {
   TokenAttributes,
   TokenInput,
   TokenOuput,
 } from '../../types/token-type';
+import { Model } from '../../utils/const';
 
-interface IToken extends Model<TokenAttributes, TokenInput>, TokenOuput {}
+interface ITokenModel
+  extends Modelling<TokenAttributes, TokenInput>,
+    TokenOuput {}
 
-const Token = sequelize.define<IToken>('Token', {
+const TokenModel = sequelize.define<ITokenModel>(Model.Token, {
   uuid: {
     type: DataTypes.UUID,
     primaryKey: true,
     defaultValue: DataTypes.UUIDV4,
   },
-  refreshToken: {
-    type: DataTypes.STRING,
+  token: {
+    type: DataTypes.TEXT,
     allowNull: false,
     unique: true,
   },
@@ -25,4 +28,4 @@ const Token = sequelize.define<IToken>('Token', {
   },
 });
 
-export default Token;
+export default TokenModel;

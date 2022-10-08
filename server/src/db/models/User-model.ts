@@ -1,11 +1,11 @@
-import { DataTypes, Model } from 'sequelize';
+import { DataTypes, Model as Modelling } from 'sequelize';
 import sequelize from '../config';
 import { UserAttributes, UserInput, UserOuput } from '../../types/user-type';
-import { Role } from '../../utils/const';
+import { Model, Role } from '../../utils/const';
 
-interface IUser extends Model<UserAttributes, UserInput>, UserOuput {}
+interface IUserModel extends Modelling<UserAttributes, UserInput>, UserOuput {}
 
-const User = sequelize.define<IUser>('User', {
+const UserModel = sequelize.define<IUserModel>(Model.User, {
   uuid: {
     type: DataTypes.UUID,
     primaryKey: true,
@@ -34,4 +34,4 @@ const User = sequelize.define<IUser>('User', {
   },
 });
 
-export default User;
+export default UserModel;

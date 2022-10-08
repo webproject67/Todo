@@ -1,27 +1,32 @@
-import { DataTypes, Model } from 'sequelize';
+import { DataTypes, Model as Modelling } from 'sequelize';
 import sequelize from '../config';
 import { TaskAttributes, TaskInput, TaskOuput } from '../../types/task-type';
+import { Model } from '../../utils/const';
 
-interface ITask extends Model<TaskAttributes, TaskInput>, TaskOuput {}
+interface ITaskModel extends Modelling<TaskAttributes, TaskInput>, TaskOuput {}
 
-const Task = sequelize.define<ITask>('Task', {
+const TaskModel = sequelize.define<ITaskModel>(Model.Task, {
   uuid: {
     type: DataTypes.UUID,
     primaryKey: true,
     defaultValue: DataTypes.UUIDV4,
   },
-  task: {
+  text: {
     type: DataTypes.STRING,
     allowNull: false,
-  },
-  isClosed: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: false,
   },
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
   },
+  priority: {
+    type: DataTypes.INTEGER,
+    defaultValue: 2,
+  },
+  isClosed: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+  },
 });
 
-export default Task;
+export default TaskModel;

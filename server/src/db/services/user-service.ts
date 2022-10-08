@@ -1,35 +1,20 @@
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 import createError from 'http-errors';
 import * as userDal from '../dals/user-dal';
 import {
   UserInput,
-  UserOuput,
-  UserLinkActivate,
-  UsersAndCountAll,
-  UserOuputJwt,
+  UsersOuput,
   UserCreate,
-  UserUpdateActivate,
+  UserUpdate,
 } from '../../types/user-type';
-
-const jwtAccessSecret = process.env.JWT_ACCESS_SECRET as string;
-const jwtRefreshSecret = process.env.JWT_REFRESH_SECRET as string;
-
-const generateJwt = ({ uuid, email, role }: UserOuput): UserOuputJwt => {
-  const accessToken = jwt.sign({ uuid, email, role }, jwtAccessSecret, {
-    expiresIn: '15m',
-  });
-  const refreshToken = jwt.sign({ uuid, email, role }, jwtRefreshSecret, {
-    expiresIn: '30d',
-  });
-  return { accessToken, refreshToken };
-};
+import { TypeToken } from '../../utils/const';
+import { jwtSign } from '../../utils/generate-jwt';
 
 const createUser = async ({
   email,
   password,
 }: UserInput): Promise<UserCreate> => {
-  const findCandidate = await userDal.getUserByEmail({ email, password });
+  const findCandidate = await userDal.getUserByEmail(email);
   if (findCandidate) throw createError(401, `${email} уже существует`);
 
   const hashPassword = await bcrypt.hash(password, 15);
@@ -37,51 +22,36 @@ const createUser = async ({
 
   return {
     candidate,
-    token: generateJwt(candidate),
+    accessToken: jwtSign(candidate, TypeToken.Access),
+    refreshToken: jwtSign(candidate, TypeToken.Refresh),
   };
 };
 
 const getUserByEmail = async (
   { email, password }: UserInput,
-  ceckPassword: boolean
+  checkPassword: boolean
 ): Promise<UserCreate> => {
-  const candidate = await userDal.getUserByEmail({ email, password });
+  const candidate = await userDal.getUserByEmail(email);
   if (!candidate) throw createError(401, `${email} не найден`);
 
-  if (ceckPassword) {
+  if (checkPassword) {
     const comparePassword = bcrypt.compareSync(password, candidate.password);
     if (!comparePassword) throw createError(401, `Неверный пароль`);
   }
 
   return {
     candidate,
-    token: generateJwt(candidate),
+    accessToken: jwtSign(candidate, TypeToken.Access),
+    refreshToken: jwtSign(candidate, TypeToken.Refresh),
   };
 };
 
-const getUserByUuid = async (payload: UserLinkActivate): Promise<void> => {
-  const candidate = await userDal.getUserByUuid(payload);
-  if (!candidate) throw createError(401, `Неккоректная ссылка активации`);
-};
+const getUsersAll = (): Promise<UsersOuput> => userDal.getUsersAll();
 
-const getUsersAll = async (): Promise<UsersAndCountAll> =>
-  userDal.getUsersAll();
-
-const deleteUser = async (payload: string): Promise<boolean> =>
+const deleteUser = (payload: string): Promise<void> =>
   userDal.deleteUser(payload);
 
-const updateUserActivated = async (
-  payload: UserUpdateActivate
-): Promise<boolean> => {
-  const isUpdateActivated = await userDal.updateUserActivated(payload);
-  return isUpdateActivated;
-};
+const updateUser = (payload: UserUpdate): Promise<void> =>
+  userDal.updateUser(payload);
 
-export {
-  createUser,
-  getUserByEmail,
-  getUserByUuid,
-  getUsersAll,
-  deleteUser,
-  updateUserActivated,
-};
+export { createUser, getUserByEmail, getUsersAll, deleteUser, updateUser };

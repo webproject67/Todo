@@ -1,30 +1,33 @@
 import createError from 'http-errors';
 import * as tokenDal from '../dals/token-dal';
-import { TokenInput, TokenOuput } from '../../types/token-type';
+import { TokenOuput, TokenCreate } from '../../types/token-type';
 import { UserOuput } from '../../types/user-type';
-import verifyJwt from '../../utils/verify-jwt';
+import { jwtVerify } from '../../utils/generate-jwt';
 import { TypeToken } from '../../utils/const';
 
-const createToken = async (
-  payload: TokenInput
-): Promise<TokenOuput | boolean> => {
-  const tokenData = await tokenDal.getTokenByUser(payload);
-  if (tokenData) return tokenDal.updateToken(payload);
+const createToken = async ({
+  UserUuid,
+  token,
+}: TokenCreate): Promise<TokenOuput | boolean> => {
+  const tokenData = await tokenDal.getTokenByUser(UserUuid);
+  if (tokenData) return tokenDal.updateToken({ UserUuid, token });
 
-  return tokenDal.createToken(payload);
+  return tokenDal.createToken({ UserUuid, token });
 };
 
-const deleteToken = (payload: TokenInput): Promise<boolean> =>
+const deleteToken = (payload: string): Promise<void> =>
   tokenDal.deleteToken(payload);
 
-const refresh = async (payload: TokenInput): Promise<UserOuput> => {
-  if (!payload.refreshToken) throw createError(401, `Не авторизован`);
+const getUserData = async (token: string): Promise<null | UserOuput> => {
+  if (token) {
+    const userData = jwtVerify(token, TypeToken.Refresh);
+    const findToken = tokenDal.getTokenByToken(token);
+    if (!userData || !findToken) throw createError(401, `Не авторизован`);
 
-  const userData = await verifyJwt(payload.refreshToken, TypeToken.Refresh);
-  const token = tokenDal.getTokenByRefreshToken(payload);
-  if (!userData || !token) throw createError(401, `Не авторизован`);
+    return userData as UserOuput;
+  }
 
-  return userData;
+  return null;
 };
 
-export { createToken, deleteToken, refresh };
+export { createToken, deleteToken, getUserData };

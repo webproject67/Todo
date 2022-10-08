@@ -2,7 +2,7 @@ import nodemailer from 'nodemailer';
 import { google } from 'googleapis';
 import SMTPTransport from 'nodemailer/lib/smtp-transport';
 
-const sendMail = async (email: string, uuid: string): Promise<void> => {
+const sendMail = async (email: string, href: string): Promise<void> => {
   const emailClient = process.env.EMAIL_CLIENT;
   const emailClientId = process.env.EMAIL_CLIENT_ID;
   const emailClientSecret = process.env.EMAIL_CLIENT_SECRET;
@@ -42,7 +42,7 @@ const sendMail = async (email: string, uuid: string): Promise<void> => {
         <h1>Регистрация на сайте "TODO".</h1>
         <p>Для активации вашего аккаунта необходимо перейти по ссылке:</p>
         <p>
-          <a href="${uuid}">${uuid}</a>
+          <a href="${href}">${href}</a>
         </p>
         <p>Спасибо!</p>
       </div>

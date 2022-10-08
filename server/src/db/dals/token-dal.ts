@@ -1,45 +1,40 @@
 import TokenModel from '../models/Token-model';
-import { TokenInput, TokenOuput } from '../../types/token-type';
+import { TokenOuput, TokenCreate } from '../../types/token-type';
 
-const createToken = async (payload: TokenInput): Promise<TokenOuput> => {
-  const tokenData = await TokenModel.create(payload);
-  return tokenData;
+const createToken = async (payload: TokenCreate): Promise<TokenOuput> => {
+  const token = await TokenModel.create(payload);
+  return token;
 };
 
-const getTokenByUser = async ({
-  UserUuid,
-}: TokenInput): Promise<TokenOuput | null> => {
-  const tokenData = await TokenModel.findOne({ where: { UserUuid } });
-  return tokenData;
+const getTokenByUser = async (UserUuid: string): Promise<TokenOuput | null> => {
+  const token = await TokenModel.findOne({ where: { UserUuid } });
+  return token;
 };
 
-const getTokenByRefreshToken = async ({
-  refreshToken,
-}: TokenInput): Promise<TokenOuput | null> => {
-  const tokenData = await TokenModel.findOne({ where: { refreshToken } });
-  return tokenData;
+const getTokenByToken = async (token: string): Promise<TokenOuput | null> => {
+  const getToken = await TokenModel.findOne({ where: { token } });
+  return getToken;
 };
 
 const updateToken = async ({
   UserUuid,
-  refreshToken,
-}: TokenInput): Promise<boolean> => {
+  token,
+}: TokenCreate): Promise<boolean> => {
   const isUpdateToken = await TokenModel.update(
-    { refreshToken },
+    { token },
     { where: { UserUuid } }
   );
   return !!isUpdateToken;
 };
 
-const deleteToken = async ({ refreshToken }: TokenInput): Promise<boolean> => {
-  const isDelToken = await TokenModel.destroy({ where: { refreshToken } });
-  return !!isDelToken;
+const deleteToken = async (token: string): Promise<void> => {
+  await TokenModel.destroy({ where: { token } });
 };
 
 export {
   createToken,
   getTokenByUser,
-  getTokenByRefreshToken,
+  getTokenByToken,
   updateToken,
   deleteToken,
 };

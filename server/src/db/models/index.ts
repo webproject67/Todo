@@ -1,5 +1,5 @@
-import TaskModel from './Task-model';
 import UserModel from './User-model';
+import TaskModel from './Task-model';
 import TokenModel from './Token-model';
 
-export { TaskModel, UserModel, TokenModel };
+export { UserModel, TaskModel, TokenModel };

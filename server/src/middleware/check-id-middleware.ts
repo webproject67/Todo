@@ -1,16 +1,16 @@
 import { Request, Response, NextFunction } from 'express';
 import asyncHandler from 'express-async-handler';
 import createError from 'http-errors';
-import { Role } from '../utils/const';
 
-const checkRoleMiddleware = asyncHandler(
+const checkIdMiddleware = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
-    if (req.body.userData.role !== Role.SuperAdmin)
+    const userUuid = req.body.UserUuid || req.query.UserUuid;
+
+    if (req.body.userData.uuid !== userUuid)
       throw createError(403, `Нет доступа`);
 
-    req.body.userData = {};
     next();
   }
 );
 
-export default checkRoleMiddleware;
+export default checkIdMiddleware;

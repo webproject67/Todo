@@ -2,9 +2,8 @@ import UserModel from '../models/User-model';
 import {
   UserInput,
   UserOuput,
-  UserLinkActivate,
-  UsersAndCountAll,
-  UserUpdateActivate,
+  UsersOuput,
+  UserUpdate,
 } from '../../types/user-type';
 
 const createUser = async (payload: UserInput): Promise<UserOuput> => {
@@ -12,46 +11,25 @@ const createUser = async (payload: UserInput): Promise<UserOuput> => {
   return candidate;
 };
 
-const getUserByEmail = async ({
-  email,
-}: UserInput): Promise<UserOuput | null> => {
+const getUserByEmail = async (email: string): Promise<UserOuput | null> => {
   const candidate = await UserModel.findOne({ where: { email } });
   return candidate;
 };
 
-const getUserByUuid = async ({
-  uuid,
-}: UserLinkActivate): Promise<UserOuput | null> => {
-  const candidate = await UserModel.findOne({ where: { uuid } });
-  return candidate;
-};
-
-const getUsersAll = async (): Promise<UsersAndCountAll> => {
-  const candidates = await UserModel.findAndCountAll();
+const getUsersAll = async (): Promise<UsersOuput> => {
+  const candidates = await UserModel.findAll({
+    attributes: ['uuid', 'email'],
+    order: ['email'],
+  });
   return candidates;
 };
 
-const deleteUser = async (uuid: string): Promise<boolean> => {
-  const isDelUser = await UserModel.destroy({ where: { uuid } });
-  return !!isDelUser;
+const deleteUser = async (uuid: string): Promise<void> => {
+  await UserModel.destroy({ where: { uuid } });
 };
 
-const updateUserActivated = async ({
-  isActivated,
-  uuid,
-}: UserUpdateActivate): Promise<boolean> => {
-  const isUpdateActivated = await UserModel.update(
-    { isActivated },
-    { where: { uuid } }
-  );
-  return !!isUpdateActivated;
+const updateUser = async ({ isActivated, uuid }: UserUpdate): Promise<void> => {
+  await UserModel.update({ isActivated }, { where: { uuid } });
 };
 
-export {
-  createUser,
-  getUserByEmail,
-  getUserByUuid,
-  getUsersAll,
-  deleteUser,
-  updateUserActivated,
-};
+export { createUser, getUserByEmail, getUsersAll, deleteUser, updateUser };

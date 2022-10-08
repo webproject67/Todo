@@ -16,32 +16,24 @@ type UserInput = Optional<UserAttributes, 'uuid'>;
 
 type UserOuput = Required<UserAttributes>;
 
-type UserLinkActivate = Pick<UserAttributes, 'uuid'>;
+type UsersOuput = Pick<UserAttributes, 'uuid' | 'email'>[];
 
-type UserUpdateActivate = Pick<UserAttributes, 'uuid' | 'isActivated'>;
-
-type UsersAndCountAll = {
-  rows: UserOuput[];
-  count: number;
-};
-
-type UserOuputJwt = {
+type UserCreate = {
+  candidate: UserOuput;
   accessToken: string;
   refreshToken: string;
 };
 
-type UserCreate = {
-  candidate: UserOuput;
-  token: UserOuputJwt;
+type UserUpdate = {
+  isActivated: boolean;
+  uuid: string;
 };
 
 export type {
   UserAttributes,
   UserInput,
   UserOuput,
-  UserLinkActivate,
-  UserUpdateActivate,
-  UsersAndCountAll,
-  UserOuputJwt,
+  UsersOuput,
   UserCreate,
+  UserUpdate,
 };
