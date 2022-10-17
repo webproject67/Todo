@@ -33,4 +33,4 @@ function SignUp(): JSX.Element {
   );
 }
 
-export default SignUp;
+export default React.memo(SignUp);

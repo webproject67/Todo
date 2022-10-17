@@ -21,4 +21,4 @@ function Spinner(): JSX.Element {
   );
 }
 
-export default Spinner;
+export default React.memo(Spinner);

@@ -24,4 +24,4 @@ MyLink.defaultProps = {
   underlinedHover: true,
 };
 
-export default MyLink;
+export default React.memo(MyLink);

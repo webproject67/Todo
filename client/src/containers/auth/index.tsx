@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import Auth from '../../components/auth';
 import { useAppDispatch } from '../../hooks';
 import { signUpAction, signInAction } from '../../store/api-actions';
@@ -19,20 +19,26 @@ function AuthContainer(): JSX.Element {
   });
 
   const callbacks: ICallbacks = {
-    onChange: (value, name) => {
+    onChange: useCallback((value, name) => {
       setData((prevData) => ({ ...prevData, [name]: value }));
-    },
-    onSubmitSignUp: (event) => {
-      event.preventDefault();
-      dispatch(signUpAction(data));
-    },
-    onSubmitSignIn: (event) => {
-      event.preventDefault();
-      dispatch(signInAction(data));
-    },
+    }, []),
+    onSubmitSignUp: useCallback(
+      (event) => {
+        event.preventDefault();
+        dispatch(signUpAction(data));
+      },
+      [data, dispatch]
+    ),
+    onSubmitSignIn: useCallback(
+      (event) => {
+        event.preventDefault();
+        dispatch(signInAction(data));
+      },
+      [data, dispatch]
+    ),
   };
 
   return <Auth data={data} events={callbacks} />;
 }
 
-export default AuthContainer;
+export default React.memo(AuthContainer);

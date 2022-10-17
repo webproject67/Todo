@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import UserSelect from '../../components/user-select';
 import { NameTextField } from '../../utils/const';
 import { OnChangeType } from '../../types/event-type';
@@ -29,13 +29,16 @@ function UserSelectContainer(): JSX.Element {
   const dispatch = useAppDispatch();
 
   const callbacks: ICallbacks = {
-    onChange: (value) => {
-      dispatch(setSelectUser(value));
-    },
-    onClick: () => {
+    onChange: useCallback(
+      (value) => {
+        dispatch(setSelectUser(value));
+      },
+      [dispatch]
+    ),
+    onClick: useCallback(() => {
       dispatch(deleteUserAction(selectUser));
       dispatch(resetSelectUser());
-    },
+    }, [dispatch, selectUser]),
   };
 
   useEffect(() => {
@@ -60,4 +63,4 @@ function UserSelectContainer(): JSX.Element {
   );
 }
 
-export default UserSelectContainer;
+export default React.memo(UserSelectContainer);

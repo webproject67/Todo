@@ -49,4 +49,4 @@ function ProfileCard({ profile }: IProfileCard): JSX.Element {
   );
 }
 
-export default ProfileCard;
+export default React.memo(ProfileCard);

@@ -13,4 +13,4 @@ function LayoutComponent({ children, styles }: LayoutComponent): JSX.Element {
   return <div className={cn({ styles })}>{children}</div>;
 }
 
-export default LayoutComponent;
+export default React.memo(LayoutComponent);

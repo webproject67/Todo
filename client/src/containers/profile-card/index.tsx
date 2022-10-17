@@ -10,4 +10,4 @@ function ProfileCardContainer(): JSX.Element {
   return <ProfileCard profile={profile} />;
 }
 
-export default ProfileCardContainer;
+export default React.memo(ProfileCardContainer);

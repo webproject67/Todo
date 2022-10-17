@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import TaskList from '../../components/task-list';
 import priorities from '../../utils/select';
@@ -37,24 +37,36 @@ function TaskListContainer(): JSX.Element {
   const dispatch = useAppDispatch();
 
   const callbacks: ICallbacks = {
-    onChange: (value, name, id) =>
-      dispatch(
-        updateTaskAction({
-          UserUuid: uuid,
-          uuid: String(id),
-          priority: Number(value),
-        })
-      ),
-    onClickClose: (task) =>
-      dispatch(
-        updateTaskAction({
-          UserUuid: uuid,
-          uuid: task.uuid,
-          isClosed: !task.isClosed,
-        })
-      ),
-    onClickDelete: (task) =>
-      dispatch(deleteTaskAction({ UserUuid: uuid, uuid: task.uuid })),
+    onChange: useCallback(
+      (value, name, id) => {
+        dispatch(
+          updateTaskAction({
+            UserUuid: uuid,
+            uuid: String(id),
+            priority: Number(value),
+          })
+        );
+      },
+      [dispatch, uuid]
+    ),
+    onClickClose: useCallback(
+      (task) => {
+        dispatch(
+          updateTaskAction({
+            UserUuid: uuid,
+            uuid: task.uuid,
+            isClosed: !task.isClosed,
+          })
+        );
+      },
+      [dispatch, uuid]
+    ),
+    onClickDelete: useCallback(
+      (task) => {
+        dispatch(deleteTaskAction({ UserUuid: uuid, uuid: task.uuid }));
+      },
+      [dispatch, uuid]
+    ),
   };
 
   useEffect(() => {
@@ -81,4 +93,4 @@ function TaskListContainer(): JSX.Element {
   );
 }
 
-export default TaskListContainer;
+export default React.memo(TaskListContainer);

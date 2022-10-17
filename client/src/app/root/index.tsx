@@ -31,4 +31,4 @@ function Root(): JSX.Element {
   );
 }
 
-export default Root;
+export default React.memo(Root);

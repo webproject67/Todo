@@ -59,4 +59,4 @@ function UserSelect({
   );
 }
 
-export default UserSelect;
+export default React.memo(UserSelect);

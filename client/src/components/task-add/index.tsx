@@ -37,4 +37,4 @@ function TaskAdd({ text, events }: ITaskAdd): JSX.Element {
   );
 }
 
-export default TaskAdd;
+export default React.memo(TaskAdd);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import Header from '../../components/header';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import { signOutAction } from '../../store/api-actions';
@@ -19,7 +19,7 @@ function HeaderContainer(): JSX.Element {
   const dispatch = useAppDispatch();
 
   const callbacks: ICallbacks = {
-    onClick: () => dispatch(signOutAction()),
+    onClick: useCallback(() => dispatch(signOutAction()), [dispatch]),
   };
 
   return (
@@ -31,4 +31,4 @@ function HeaderContainer(): JSX.Element {
   );
 }
 
-export default HeaderContainer;
+export default React.memo(HeaderContainer);

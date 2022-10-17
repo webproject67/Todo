@@ -28,4 +28,4 @@ MyButton.defaultProps = {
   onClick: () => null,
 };
 
-export default MyButton;
+export default React.memo(MyButton);

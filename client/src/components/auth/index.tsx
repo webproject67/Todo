@@ -67,4 +67,4 @@ function Auth({ data, events }: IAuth): JSX.Element {
   );
 }
 
-export default Auth;
+export default React.memo(Auth);

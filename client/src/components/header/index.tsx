@@ -43,4 +43,4 @@ function Header({ email, isAuthorized, onClick }: IHeader): JSX.Element {
   );
 }
 
-export default Header;
+export default React.memo(Header);

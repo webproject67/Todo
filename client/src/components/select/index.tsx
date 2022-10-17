@@ -49,4 +49,4 @@ function MySelect({
   );
 }
 
-export default MySelect;
+export default React.memo(MySelect);

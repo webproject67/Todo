@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import TaskAdd from '../../components/task-add';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import { getCandidate } from '../../store/user-data/selectors';
@@ -17,17 +17,20 @@ function TaskAddContainer(): JSX.Element {
   const dispatch = useAppDispatch();
 
   const callbacks: ICallbacks = {
-    onChange: (value) => {
+    onChange: useCallback((value) => {
       setText(value);
-    },
-    onSubmit: (event) => {
-      event.preventDefault();
-      dispatch(createTaskAction({ UserUuid: uuid, text }));
-      setText('');
-    },
+    }, []),
+    onSubmit: useCallback(
+      (event) => {
+        event.preventDefault();
+        dispatch(createTaskAction({ UserUuid: uuid, text }));
+        setText('');
+      },
+      [dispatch, text, uuid]
+    ),
   };
 
   return <TaskAdd text={text} events={callbacks} />;
 }
 
-export default TaskAddContainer;
+export default React.memo(TaskAddContainer);

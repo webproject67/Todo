@@ -33,4 +33,4 @@ function Profile(): JSX.Element {
   );
 }
 
-export default Profile;
+export default React.memo(Profile);
