@@ -22,12 +22,12 @@ function AuthContainer(): JSX.Element {
     onChange: (value, name) => {
       setData((prevData) => ({ ...prevData, [name]: value }));
     },
-    onSubmitSignUp: (evt) => {
-      evt.preventDefault();
+    onSubmitSignUp: (event) => {
+      event.preventDefault();
       dispatch(signUpAction(data));
     },
-    onSubmitSignIn: (evt) => {
-      evt.preventDefault();
+    onSubmitSignIn: (event) => {
+      event.preventDefault();
       dispatch(signInAction(data));
     },
   };

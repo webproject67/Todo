@@ -15,7 +15,7 @@ const createUser = async ({
   password,
 }: UserInput): Promise<UserCreate> => {
   const findCandidate = await userDal.getUserByEmail(email);
-  if (findCandidate) throw createError(401, `${email} уже существует`);
+  if (findCandidate) throw createError(400, `${email} уже существует`);
 
   const hashPassword = await bcrypt.hash(password, 15);
   const candidate = await userDal.createUser({ email, password: hashPassword });
@@ -32,11 +32,11 @@ const getUserByEmail = async (
   checkPassword: boolean
 ): Promise<UserCreate> => {
   const candidate = await userDal.getUserByEmail(email);
-  if (!candidate) throw createError(401, `${email} не найден`);
+  if (!candidate) throw createError(400, `${email} не найден`);
 
   if (checkPassword) {
     const comparePassword = bcrypt.compareSync(password, candidate.password);
-    if (!comparePassword) throw createError(401, `Неверный пароль`);
+    if (!comparePassword) throw createError(400, `Неверный пароль`);
   }
 
   return {

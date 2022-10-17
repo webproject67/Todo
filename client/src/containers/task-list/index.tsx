@@ -1,49 +1,82 @@
 import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import TaskList from '../../components/task-list';
+import priorities from '../../utils/select';
+import { AppRoute, NameTextField } from '../../utils/const';
+import { UserOuput } from '../../types/user-type';
+import { TaskOuput } from '../../types/task-type';
+import { OnChangeType } from '../../types/event-type';
 import { useAppSelector, useAppDispatch } from '../../hooks';
-import { getCandidate } from '../../store/user-data/selectors';
-import { getTasks, getCountUpdates } from '../../store/task-data/selectors';
+import { getCandidate, getSelectUser } from '../../store/user-data/selectors';
 import { resetTasksAll } from '../../store/task-data/task-data';
-import getSelectEmail from '../../store/user-process/selectors';
+import {
+  getTasks,
+  getCountTasks,
+  getCountRequests,
+} from '../../store/task-data/selectors';
 import {
   getTasksAllAction,
   deleteTaskAction,
   updateTaskAction,
 } from '../../store/api-actions';
-import { TaskOuput } from '../../types/task-type';
-import { AppRoute } from '../../utils/const';
+
+interface ICallbacks {
+  onChange: OnChangeType;
+  onClickClose: (task: TaskOuput) => void;
+  onClickDelete: (task: TaskOuput) => void;
+}
 
 function TaskListContainer(): JSX.Element {
   const location = useLocation();
-  const dispatch = useAppDispatch();
-  const candidate = useAppSelector(getCandidate);
-  const tasks = useAppSelector(getTasks);
-  const countUpdates = useAppSelector(getCountUpdates);
-  const email = useAppSelector(getSelectEmail);
   const isRoot = location.pathname === AppRoute.Root;
+  const { uuid } = useAppSelector(getCandidate) as UserOuput;
+  const selectUser = useAppSelector(getSelectUser);
+  const tasks = useAppSelector(getTasks);
+  const countTasks = useAppSelector(getCountTasks);
+  const countRequests = useAppSelector(getCountRequests);
+  const dispatch = useAppDispatch();
 
-  const onClickDelete = (uuid: string) => {
-    dispatch(deleteTaskAction({ uuid }));
-  };
-
-  const onClickClose = (elem: TaskOuput) => {
-    dispatch(updateTaskAction({ uuid: elem.uuid, isClosed: !elem.isClosed }));
+  const callbacks: ICallbacks = {
+    onChange: (value, name, id) =>
+      dispatch(
+        updateTaskAction({
+          UserUuid: uuid,
+          uuid: String(id),
+          priority: Number(value),
+        })
+      ),
+    onClickClose: (task) =>
+      dispatch(
+        updateTaskAction({
+          UserUuid: uuid,
+          uuid: task.uuid,
+          isClosed: !task.isClosed,
+        })
+      ),
+    onClickDelete: (task) =>
+      dispatch(deleteTaskAction({ UserUuid: uuid, uuid: task.uuid })),
   };
 
   useEffect(() => {
-    if (isRoot) dispatch(getTasksAllAction({ UserUuid: candidate.uuid }));
-    if (!isRoot && email) dispatch(getTasksAllAction({ UserUuid: email }));
+    if (isRoot && uuid) dispatch(getTasksAllAction(uuid));
+    if (!isRoot && selectUser) dispatch(getTasksAllAction(selectUser));
+
     return () => {
       dispatch(resetTasksAll());
     };
-  }, [dispatch, candidate.uuid, countUpdates, isRoot, email]);
+  }, [dispatch, uuid, countRequests, isRoot, selectUser]);
 
   return (
     <TaskList
       tasks={tasks}
-      onClickDelete={onClickDelete}
-      onClickClose={onClickClose}
+      countTasks={countTasks}
+      name={NameTextField.Priority}
+      priorities={priorities}
+      id={NameTextField.Priority}
+      label="Приоритет"
+      onChange={callbacks.onChange}
+      onClickClose={callbacks.onClickClose}
+      onClickDelete={callbacks.onClickDelete}
     />
   );
 }

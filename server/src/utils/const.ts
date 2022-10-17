@@ -1,17 +1,25 @@
-const DEVELOPMENT = 'development';
-
 const COOKIE_NAME = 'todoToken';
+
+enum ExpiresToken {
+  Access = '15m',
+  Refresh = '30d',
+}
+
+enum TypeToken {
+  Access = 'ACCESS',
+  Refresh = 'REFRESH',
+}
+
+enum Role {
+  User = 'USER',
+  Admin = 'ADMIN',
+  SuperAdmin = 'SUPER_ADMIN',
+}
 
 enum Model {
   User = 'User',
   Task = 'Task',
   Token = 'Token',
-}
-
-enum Role {
-  User = 'User',
-  Admin = 'Admin',
-  SuperAdmin = 'SuperAdmin',
 }
 
 enum TypeTextField {
@@ -20,22 +28,4 @@ enum TypeTextField {
   Password = 'password',
 }
 
-enum TypeToken {
-  Access = 'access',
-  Refresh = 'refresh',
-}
-
-enum ExpiresToken {
-  Access = '15m',
-  Refresh = '30d',
-}
-
-export {
-  DEVELOPMENT,
-  COOKIE_NAME,
-  Model,
-  Role,
-  TypeTextField,
-  TypeToken,
-  ExpiresToken,
-};
+export { COOKIE_NAME, ExpiresToken, TypeToken, Role, Model, TypeTextField };

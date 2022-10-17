@@ -1,16 +1,16 @@
-const AUTH_TOKEN_KEY_NAME = 'todo-token';
+import { TOKEN_NAME } from '../utils/const';
 
 const getToken = (): string => {
-  const token = localStorage.getItem(AUTH_TOKEN_KEY_NAME);
+  const token = localStorage.getItem(TOKEN_NAME);
   return token ?? '';
 };
 
 const saveToken = (token: string): void => {
-  localStorage.setItem(AUTH_TOKEN_KEY_NAME, token);
+  localStorage.setItem(TOKEN_NAME, token);
 };
 
 const dropToken = (): void => {
-  localStorage.removeItem(AUTH_TOKEN_KEY_NAME);
+  localStorage.removeItem(TOKEN_NAME);
 };
 
 export { getToken, saveToken, dropToken };

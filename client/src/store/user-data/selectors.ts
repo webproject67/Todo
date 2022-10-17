@@ -1,17 +1,30 @@
-import { NameSpace } from '../../utils/const';
+import { AuthorizationStatus, NameSpace } from '../../utils/const';
 import { State } from '../../types/state-type';
-import { UserOuput } from '../../types/user-type';
+import { UserAttributes, UsersOuput } from '../../types/user-type';
 
-const getCandidate = (state: State): UserOuput =>
-  state[NameSpace.UserData].user.candidate;
+const getCandidate = (state: State): UserAttributes =>
+  state[NameSpace.UserData].user;
 
-const getCandidates = (state: State): UserOuput[] =>
-  state[NameSpace.UserData].users.rows;
+const getCandidates = (state: State): UsersOuput =>
+  state[NameSpace.UserData].users;
 
-const getLoadedUserData = (state: State): boolean =>
+const getSelectUser = (state: State): string =>
+  state[NameSpace.UserData].selectUser;
+
+const getLoading = (state: State): boolean =>
   state[NameSpace.UserData].isLoaded;
 
-const getAuthorization = (state: State): boolean =>
-  state[NameSpace.UserData].isAuthorization;
+const getAuthorizationStatus = (state: State): AuthorizationStatus =>
+  state[NameSpace.UserData].authorization;
 
-export { getCandidate, getCandidates, getLoadedUserData, getAuthorization };
+const getCountRequests = (state: State): number =>
+  state[NameSpace.UserData].countRequests;
+
+export {
+  getCandidate,
+  getCandidates,
+  getSelectUser,
+  getLoading,
+  getAuthorizationStatus,
+  getCountRequests,
+};

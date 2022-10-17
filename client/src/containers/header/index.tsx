@@ -1,32 +1,31 @@
 import React from 'react';
+import Header from '../../components/header';
 import { useAppSelector, useAppDispatch } from '../../hooks';
+import { signOutAction } from '../../store/api-actions';
 import {
   getCandidate,
-  getAuthorization,
+  getAuthorizationStatus,
 } from '../../store/user-data/selectors';
-import Header from '../../components/header';
-import { signOutAction } from '../../store/api-actions';
-import { OnClickType } from '../../types/event-type';
+import { UserOuput } from '../../types/user-type';
+import { AuthorizationStatus } from '../../utils/const';
 
 interface ICallbacks {
-  onClick: OnClickType;
+  onClick: () => void;
 }
 
 function HeaderContainer(): JSX.Element {
+  const { email } = useAppSelector(getCandidate) as UserOuput;
+  const authorization = useAppSelector(getAuthorizationStatus);
   const dispatch = useAppDispatch();
-  const candidate = useAppSelector(getCandidate);
-  const isAuthorization = useAppSelector(getAuthorization);
 
   const callbacks: ICallbacks = {
-    onClick: () => {
-      dispatch(signOutAction());
-    },
+    onClick: () => dispatch(signOutAction()),
   };
 
   return (
     <Header
-      candidate={candidate}
-      isAuthorization={isAuthorization}
+      email={email}
+      isAuthorized={authorization === AuthorizationStatus.Auth}
       onClick={callbacks.onClick}
     />
   );

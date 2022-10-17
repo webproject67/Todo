@@ -5,28 +5,23 @@ import { AppRoute } from '../../utils/const';
 import './style.scss';
 
 interface IMyLink {
-  href:
-    | AppRoute.Root
-    | AppRoute.SignUp
-    | AppRoute.SignIn
-    | AppRoute.Profile
-    | AppRoute.Dashboard;
+  href: AppRoute;
   children: string | ReactNode;
-  underline?: 'none' | 'hover';
+  underlinedHover?: boolean;
 }
 
-function MyLink({ href, underline, children }: IMyLink): JSX.Element {
+function MyLink({ href, children, underlinedHover }: IMyLink): JSX.Element {
   const cn = bem('Link');
 
   return (
-    <Link className={cn({ underline })} to={href}>
+    <Link className={cn({ underlinedHover })} to={href}>
       {children}
     </Link>
   );
 }
 
 MyLink.defaultProps = {
-  underline: 'hover',
+  underlinedHover: true,
 };
 
 export default MyLink;

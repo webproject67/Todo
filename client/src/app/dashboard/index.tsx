@@ -1,23 +1,47 @@
-import React from 'react';
-import { AppRoute } from '../../utils/const';
-import Protected from '../../containers/protected';
-import LayoutFullHeight from '../../components/layout-full-height';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Header from '../../containers/header';
-import LayoutMain from '../../components/layout-main';
-import UserSelectContainer from '../../containers/user-select';
-import TaskListContainer from '../../containers/task-list';
+import LayoutComponent from '../../components/layout-component';
+import UserSelect from '../../containers/user-select';
+import TaskList from '../../containers/task-list';
+import {
+  AuthorizationStatus,
+  AppRoute,
+  ComponentStyles,
+  Role,
+} from '../../utils/const';
+import { useAppSelector } from '../../hooks';
+import {
+  getCandidate,
+  getAuthorizationStatus,
+} from '../../store/user-data/selectors';
+import { UserOuput } from '../../types/user-type';
 
 function Dashboard(): JSX.Element {
+  const navigate = useNavigate();
+  const authorization = useAppSelector(getAuthorizationStatus);
+  const { role } = useAppSelector(getCandidate) as UserOuput;
+
+  useEffect(() => {
+    if (authorization === AuthorizationStatus.NoAuth) navigate(AppRoute.SignIn);
+  }, [authorization, navigate]);
+
   return (
-    <Protected redirect={AppRoute.SignIn}>
-      <LayoutFullHeight>
-        <Header />
-        <LayoutMain>
-          <UserSelectContainer />
-          <TaskListContainer />
-        </LayoutMain>
-      </LayoutFullHeight>
-    </Protected>
+    <LayoutComponent styles={ComponentStyles.FullHeight}>
+      <Header />
+      <LayoutComponent styles={ComponentStyles.Main}>
+        {role === Role.User ? (
+          <LayoutComponent styles={ComponentStyles.Centre}>
+            <h1>403 - нет доступа, обратитесь к разработчику сайта.</h1>
+          </LayoutComponent>
+        ) : (
+          <>
+            <UserSelect />
+            <TaskList />
+          </>
+        )}
+      </LayoutComponent>
+    </LayoutComponent>
   );
 }
 

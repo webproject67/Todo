@@ -1,52 +1,22 @@
 import { Role } from '../utils/const';
 
 type UserAttributes = {
-  uuid: string;
-  email: string;
-  password: string;
-  id?: number;
-  role?: Role.Admin | Role.User | Role.SuperAdmin;
+  uuid?: string;
+  email?: string;
+  role?: Role;
   isActivated?: boolean;
-  createdAt?: Date;
-  updatedAt?: Date;
+  createdAt?: string;
+  exp?: number;
+  iat?: number;
 };
 
-type UserInputSelect = Pick<UserAttributes, 'email'>;
-
-type UserInput = Pick<UserAttributes, 'email' | 'password'>;
+type UserInput = {
+  email: string;
+  password: string;
+};
 
 type UserOuput = Required<UserAttributes>;
 
-type UserLinkActivate = Pick<UserAttributes, 'uuid'>;
+type UsersOuput = Required<Pick<UserAttributes, 'uuid' | 'email'>>[];
 
-type UserUpdateActivate = Pick<UserAttributes, 'uuid' | 'isActivated'>;
-
-type UsersAndCountAll = {
-  rows: UserOuput[];
-  count: number;
-};
-
-type UserOuputJwt = {
-  accessToken: string;
-  refreshToken: string;
-};
-
-type UserCreate = {
-  candidate: UserOuput;
-  token: UserOuputJwt;
-};
-
-type UserCandidate = Pick<UserCreate, 'candidate'>['candidate'];
-
-export type {
-  UserAttributes,
-  UserInputSelect,
-  UserInput,
-  UserOuput,
-  UserLinkActivate,
-  UserUpdateActivate,
-  UsersAndCountAll,
-  UserOuputJwt,
-  UserCreate,
-  UserCandidate,
-};
+export type { UserAttributes, UserInput, UserOuput, UsersOuput };

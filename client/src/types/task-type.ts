@@ -1,28 +1,35 @@
 type TaskAttributes = {
-  uuid: string;
-  task: string;
-  isClosed?: boolean;
+  uuid?: string;
+  text?: string;
   id?: number;
+  priority?: number;
+  isClosed?: boolean;
   createdAt?: string;
   updatedAt?: string;
   UserUuid?: string;
 };
 
-type TaskInput = Pick<TaskAttributes, 'task'>;
+type TaskCreateInput = Required<Pick<TaskAttributes, 'UserUuid' | 'text'>>;
+
+type TaskDeleteInput = Required<Pick<TaskAttributes, 'UserUuid' | 'uuid'>>;
+
+type TaskUpdateInput = TaskDeleteInput &
+  Pick<TaskAttributes, 'isClosed' | 'priority'>;
 
 type TaskOuput = Required<TaskAttributes>;
 
+type TasksOuput = TaskOuput[];
+
 type TasksAndCountAll = {
-  rows: TaskOuput[];
+  rows: TasksOuput;
   count: number;
 };
 
-type TasksAll = Pick<TasksAndCountAll, 'rows'>['rows'];
-
 export type {
-  TaskAttributes,
-  TaskInput,
+  TaskCreateInput,
+  TaskDeleteInput,
+  TaskUpdateInput,
   TaskOuput,
+  TasksOuput,
   TasksAndCountAll,
-  TasksAll,
 };

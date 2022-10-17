@@ -1,6 +1,7 @@
 @import '../../sass/variables';
 
 .Header {
+  min-width: $width-min;
   background-color: #efefef;
 
   &-wrapper {
@@ -14,11 +15,11 @@
 
   &-logo {
     font-size: 24px;
+    color: $color-link;
     text-transform: uppercase;
   }
 
-  &-profile,
   &-dashboard {
-    margin-right: 20px;
+    margin: 0 20px;
   }
 }

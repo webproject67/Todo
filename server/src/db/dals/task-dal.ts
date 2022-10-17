@@ -13,7 +13,7 @@ const createTask = async (payload: TaskCreate): Promise<void> => {
 const getTasksAll = async (UserUuid: string): Promise<TasksAndCountAll> => {
   const tasks = await TaskModel.findAndCountAll({
     where: { UserUuid },
-    order: ['isClosed', 'priority', 'updatedAt'],
+    order: ['isClosed', 'priority', ['updatedAt', 'DESC']],
   });
   return tasks;
 };

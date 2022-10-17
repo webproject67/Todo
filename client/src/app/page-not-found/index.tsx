@@ -1,19 +1,18 @@
 import React from 'react';
-import LayoutFullHeight from '../../components/layout-full-height';
 import Header from '../../containers/header';
-import LayoutMain from '../../components/layout-main';
-import LayoutCentering from '../../components/layout-centering';
+import LayoutComponent from '../../components/layout-component';
+import { ComponentStyles } from '../../utils/const';
 
 function PageNotFound(): JSX.Element {
   return (
-    <LayoutFullHeight>
+    <LayoutComponent styles={ComponentStyles.FullHeight}>
       <Header />
-      <LayoutMain>
-        <LayoutCentering>
+      <LayoutComponent styles={ComponentStyles.Main}>
+        <LayoutComponent styles={ComponentStyles.Centre}>
           <h1>404 - страница не найдена</h1>
-        </LayoutCentering>
-      </LayoutMain>
-    </LayoutFullHeight>
+        </LayoutComponent>
+      </LayoutComponent>
+    </LayoutComponent>
   );
 }
 

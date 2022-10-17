@@ -6,7 +6,7 @@ type UserAttributes = {
   email: string;
   password: string;
   id?: number;
-  role?: Role.Admin | Role.User | Role.SuperAdmin;
+  role?: Role;
   isActivated?: boolean;
   createdAt?: Date;
   updatedAt?: Date;
@@ -16,7 +16,7 @@ type UserInput = Optional<UserAttributes, 'uuid'>;
 
 type UserOuput = Required<UserAttributes>;
 
-type UsersOuput = Pick<UserAttributes, 'uuid' | 'email'>[];
+type UsersOuput = Required<Pick<UserAttributes, 'uuid' | 'email'>>[];
 
 type UserCreate = {
   candidate: UserOuput;

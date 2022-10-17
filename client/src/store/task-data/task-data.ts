@@ -1,21 +1,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { NameSpace } from '../../utils/const';
-import { Task } from '../../types/state-type';
+import { TaskData } from '../../types/state-type';
+import { TasksAndCountAll } from '../../types/task-type';
 import {
   createTaskAction,
   getTasksAllAction,
   deleteTaskAction,
   updateTaskAction,
 } from '../api-actions';
-import { TasksAndCountAll } from '../../types/task-type';
 
-const initialState: Task = {
-  task: {
-    rows: [],
-    count: 0,
-  },
+const initialState: TaskData = {
+  tasks: [],
+  countTasks: 0,
   isLoaded: false,
-  countUpdates: 0,
+  countRequests: 0,
 };
 
 const taskData = createSlice({
@@ -23,10 +21,8 @@ const taskData = createSlice({
   initialState,
   reducers: {
     resetTasksAll: (state) => {
-      state.task = {
-        rows: [],
-        count: 0,
-      };
+      state.tasks = [];
+      state.countTasks = 0;
     },
   },
   extraReducers(builder) {
@@ -36,7 +32,7 @@ const taskData = createSlice({
       })
       .addCase(createTaskAction.fulfilled, (state) => {
         state.isLoaded = false;
-        state.countUpdates += 1;
+        state.countRequests += 1;
       })
       .addCase(createTaskAction.rejected, (state) => {
         state.isLoaded = false;
@@ -47,8 +43,9 @@ const taskData = createSlice({
       .addCase(
         getTasksAllAction.fulfilled,
         (state, action: PayloadAction<TasksAndCountAll>) => {
-          state.task = action.payload;
           state.isLoaded = false;
+          state.tasks = action.payload.rows;
+          state.countTasks = action.payload.count;
         }
       )
       .addCase(getTasksAllAction.rejected, (state) => {
@@ -59,7 +56,7 @@ const taskData = createSlice({
       })
       .addCase(deleteTaskAction.fulfilled, (state) => {
         state.isLoaded = false;
-        state.countUpdates += 1;
+        state.countRequests += 1;
       })
       .addCase(deleteTaskAction.rejected, (state) => {
         state.isLoaded = false;
@@ -69,7 +66,7 @@ const taskData = createSlice({
       })
       .addCase(updateTaskAction.fulfilled, (state) => {
         state.isLoaded = false;
-        state.countUpdates += 1;
+        state.countRequests += 1;
       })
       .addCase(updateTaskAction.rejected, (state) => {
         state.isLoaded = false;

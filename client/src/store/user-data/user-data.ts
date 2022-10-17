@@ -1,45 +1,36 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { NameSpace, Role } from '../../utils/const';
-import { User } from '../../types/state-type';
+import { AuthorizationStatus, NameSpace } from '../../utils/const';
+import { UserData } from '../../types/state-type';
+import { UserOuput, UsersOuput } from '../../types/user-type';
 import {
   signUpAction,
   signInAction,
   signOutAction,
+  checkAuthAction,
   getUsersAllAction,
   deleteUserAction,
-  checkAuthAction,
 } from '../api-actions';
-import { UserCreate, UsersAndCountAll } from '../../types/user-type';
 
-const initialState: User = {
-  user: {
-    candidate: {
-      uuid: '',
-      email: '',
-      password: '',
-      id: 0,
-      role: Role.User,
-      isActivated: false,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-    token: {
-      accessToken: '',
-      refreshToken: '',
-    },
-  },
-  users: {
-    rows: [],
-    count: 0,
-  },
+const initialState: UserData = {
+  user: {},
+  users: [],
+  selectUser: '',
   isLoaded: false,
-  isAuthorization: false,
+  authorization: AuthorizationStatus.Unknown,
+  countRequests: 0,
 };
 
 const userData = createSlice({
   name: NameSpace.UserData,
   initialState,
-  reducers: {},
+  reducers: {
+    setSelectUser: (state, action) => {
+      state.selectUser = action.payload;
+    },
+    resetSelectUser: (state) => {
+      state.selectUser = '';
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(signUpAction.pending, (state) => {
@@ -47,37 +38,63 @@ const userData = createSlice({
       })
       .addCase(
         signUpAction.fulfilled,
-        (state, action: PayloadAction<UserCreate>) => {
-          state.user = action.payload;
+        (state, action: PayloadAction<UserOuput>) => {
           state.isLoaded = false;
-          state.isAuthorization = true;
+          state.authorization = AuthorizationStatus.Auth;
+          state.user = action.payload;
         }
       )
       .addCase(signUpAction.rejected, (state) => {
         state.isLoaded = false;
-        state.isAuthorization = false;
+        state.authorization = AuthorizationStatus.NoAuth;
       })
       .addCase(signInAction.pending, (state) => {
         state.isLoaded = true;
       })
       .addCase(
         signInAction.fulfilled,
-        (state, action: PayloadAction<UserCreate>) => {
-          state.user = action.payload;
+        (state, action: PayloadAction<UserOuput>) => {
           state.isLoaded = false;
-          state.isAuthorization = true;
+          state.authorization = AuthorizationStatus.Auth;
+          state.user = action.payload;
         }
       )
       .addCase(signInAction.rejected, (state) => {
         state.isLoaded = false;
-        state.isAuthorization = false;
+        state.authorization = AuthorizationStatus.NoAuth;
+      })
+      .addCase(signOutAction.pending, (state) => {
+        state.isLoaded = true;
+      })
+      .addCase(signOutAction.fulfilled, (state) => {
+        state.isLoaded = false;
+        state.authorization = AuthorizationStatus.NoAuth;
+      })
+      .addCase(signOutAction.rejected, (state) => {
+        state.isLoaded = false;
+        state.authorization = AuthorizationStatus.Auth;
+      })
+      .addCase(checkAuthAction.pending, (state) => {
+        state.isLoaded = true;
+      })
+      .addCase(
+        checkAuthAction.fulfilled,
+        (state, action: PayloadAction<UserOuput>) => {
+          state.isLoaded = false;
+          state.authorization = AuthorizationStatus.Auth;
+          state.user = action.payload;
+        }
+      )
+      .addCase(checkAuthAction.rejected, (state) => {
+        state.isLoaded = false;
+        state.authorization = AuthorizationStatus.NoAuth;
       })
       .addCase(getUsersAllAction.pending, (state) => {
         state.isLoaded = true;
       })
       .addCase(
         getUsersAllAction.fulfilled,
-        (state, action: PayloadAction<UsersAndCountAll>) => {
+        (state, action: PayloadAction<UsersOuput>) => {
           state.isLoaded = false;
           state.users = action.payload;
         }
@@ -85,42 +102,19 @@ const userData = createSlice({
       .addCase(getUsersAllAction.rejected, (state) => {
         state.isLoaded = false;
       })
-      .addCase(signOutAction.pending, (state) => {
-        state.isLoaded = true;
-      })
-      .addCase(signOutAction.fulfilled, (state) => {
-        state.isLoaded = false;
-        state.isAuthorization = false;
-      })
-      .addCase(signOutAction.rejected, (state) => {
-        state.isLoaded = false;
-        state.isAuthorization = true;
-      })
       .addCase(deleteUserAction.pending, (state) => {
         state.isLoaded = true;
       })
       .addCase(deleteUserAction.fulfilled, (state) => {
         state.isLoaded = false;
+        state.countRequests += 1;
       })
       .addCase(deleteUserAction.rejected, (state) => {
         state.isLoaded = false;
-      })
-      .addCase(checkAuthAction.pending, (state) => {
-        state.isLoaded = true;
-      })
-      .addCase(
-        checkAuthAction.fulfilled,
-        (state, action: PayloadAction<UserCreate>) => {
-          state.user = action.payload;
-          state.isLoaded = false;
-          state.isAuthorization = true;
-        }
-      )
-      .addCase(checkAuthAction.rejected, (state) => {
-        state.isLoaded = false;
-        state.isAuthorization = false;
       });
   },
 });
 
-export default userData;
+const { setSelectUser, resetSelectUser } = userData.actions;
+
+export { userData, setSelectUser, resetSelectUser };

@@ -4,9 +4,7 @@
   color: $color-link;
   text-decoration: none;
 
-  &_underline_hover {
-    &:hover {
-      text-decoration: underline;
-    }
+  &_underlinedHover:hover {
+    text-decoration: underline;
   }
 }

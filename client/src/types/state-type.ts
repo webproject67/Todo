@@ -1,26 +1,26 @@
 import store from '../store/index';
-import { UsersAndCountAll, UserCreate } from './user-type';
-import { TasksAndCountAll } from './task-type';
-
-type UserProcess = {
-  email: string;
-};
-
-type User = {
-  user: UserCreate;
-  users: UsersAndCountAll;
-  isLoaded: boolean;
-  isAuthorization: boolean;
-};
-
-type Task = {
-  task: TasksAndCountAll;
-  isLoaded: boolean;
-  countUpdates: number;
-};
+import { UserAttributes, UsersOuput } from './user-type';
+import { TasksOuput } from './task-type';
+import { AuthorizationStatus } from '../utils/const';
 
 type State = ReturnType<typeof store.getState>;
 
 type AppDispatch = typeof store.dispatch;
 
-export type { UserProcess, User, Task, State, AppDispatch };
+type UserData = {
+  user: UserAttributes;
+  users: UsersOuput;
+  selectUser: string;
+  isLoaded: boolean;
+  authorization: AuthorizationStatus;
+  countRequests: number;
+};
+
+type TaskData = {
+  tasks: TasksOuput;
+  countTasks: number;
+  isLoaded: boolean;
+  countRequests: number;
+};
+
+export type { State, AppDispatch, UserData, TaskData };

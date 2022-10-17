@@ -1,14 +1,8 @@
 import { FormEvent } from 'react';
-import { TaskInput } from './task-type';
-import { UserInput } from './user-type';
+import { NameTextField } from '../utils/const';
 
-type OnChangeType = (
-  value: string,
-  name: keyof UserInput | keyof TaskInput
-) => void;
+type OnChangeType = (value: string, name: NameTextField, id?: string) => void;
 
-type OnSubmitType = (evt: FormEvent<HTMLFormElement>) => void;
+type OnSubmitType = (event: FormEvent<HTMLFormElement>) => void;
 
-type OnClickType = () => void;
-
-export type { OnChangeType, OnSubmitType, OnClickType };
+export type { OnChangeType, OnSubmitType };

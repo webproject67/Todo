@@ -1,10 +1,11 @@
 import React, { ReactNode } from 'react';
 import Button from '@mui/material/Button';
+import { TypeButton, VariantButton } from '../../utils/const';
 
 interface IMyButton {
   children: string | ReactNode;
-  type?: 'button' | 'submit';
-  variant?: 'outlined' | 'contained';
+  type?: TypeButton;
+  variant?: VariantButton;
   onClick?: () => void;
 }
 
@@ -22,8 +23,8 @@ function MyButton({
 }
 
 MyButton.defaultProps = {
-  type: 'button',
-  variant: 'outlined',
+  type: TypeButton.Button,
+  variant: VariantButton.Outlined,
   onClick: () => null,
 };
 

@@ -1,0 +1,44 @@
+@import '../../sass/variables';
+
+.Component {
+  &_styles_main {
+    position: relative;
+    flex-grow: 1;
+    width: 100%;
+    min-width: $width-min;
+    max-width: $width-max;
+    margin: 0 auto;
+    padding: 0 50px;
+  }
+
+  &_styles_centre {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    text-align: center;
+    transform: translate(-50%, -50%);
+  }
+
+  &_styles_fullHeight {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &_styles_frame {
+    width: 500px;
+    padding: 20px;
+    text-align: start;
+    background-color: #efefef;
+    border-radius: 20px;
+  }
+
+  &_styles_modal {
+    position: fixed;
+    z-index: 2;
+    width: 100vw;
+    height: 100vh;
+    inset: 0px;
+    background-color: rgba(0, 0, 0, 0.85);
+  }
+}

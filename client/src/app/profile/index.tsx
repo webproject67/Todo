@@ -1,28 +1,35 @@
-import React from 'react';
-import { AppRoute } from '../../utils/const';
-import Protected from '../../containers/protected';
-import LayoutFullHeight from '../../components/layout-full-height';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Header from '../../containers/header';
-import LayoutMain from '../../components/layout-main';
-import LayoutCentering from '../../components/layout-centering';
-import ProfileCard from '../../components/profile-card';
+import LayoutComponent from '../../components/layout-component';
+import ProfileCard from '../../containers/profile-card';
+import {
+  AuthorizationStatus,
+  AppRoute,
+  ComponentStyles,
+} from '../../utils/const';
 import { useAppSelector } from '../../hooks';
-import { getCandidate } from '../../store/user-data/selectors';
+import { getAuthorizationStatus } from '../../store/user-data/selectors';
 
 function Profile(): JSX.Element {
-  const candidate = useAppSelector(getCandidate);
+  const navigate = useNavigate();
+  const authorization = useAppSelector(getAuthorizationStatus);
+
+  useEffect(() => {
+    if (authorization === AuthorizationStatus.NoAuth) navigate(AppRoute.SignIn);
+  }, [authorization, navigate]);
 
   return (
-    <Protected redirect={AppRoute.SignIn}>
-      <LayoutFullHeight>
-        <Header />
-        <LayoutMain>
-          <LayoutCentering>
-            <ProfileCard candidate={candidate} />
-          </LayoutCentering>
-        </LayoutMain>
-      </LayoutFullHeight>
-    </Protected>
+    <LayoutComponent styles={ComponentStyles.FullHeight}>
+      <Header />
+      <LayoutComponent styles={ComponentStyles.Main}>
+        <LayoutComponent styles={ComponentStyles.Centre}>
+          <LayoutComponent styles={ComponentStyles.Frame}>
+            <ProfileCard />
+          </LayoutComponent>
+        </LayoutComponent>
+      </LayoutComponent>
+    </LayoutComponent>
   );
 }
 

@@ -1,38 +1,61 @@
 import React, { useEffect } from 'react';
-import getSelectEmail from '../../store/user-process/selectors';
-import { selectEmail, resetEmail } from '../../store/user-process/user-process';
 import UserSelect from '../../components/user-select';
+import { NameTextField } from '../../utils/const';
 import { OnChangeType } from '../../types/event-type';
+import { UserOuput } from '../../types/user-type';
 import { useAppSelector, useAppDispatch } from '../../hooks';
-import { getCandidates } from '../../store/user-data/selectors';
-import { deleteUserAction, getUsersAllAction } from '../../store/api-actions';
+import {
+  getCandidate,
+  getCandidates,
+  getSelectUser,
+  getCountRequests,
+} from '../../store/user-data/selectors';
+import {
+  setSelectUser,
+  resetSelectUser,
+} from '../../store/user-data/user-data';
+import { getUsersAllAction, deleteUserAction } from '../../store/api-actions';
+
+interface ICallbacks {
+  onChange: OnChangeType;
+  onClick: () => void;
+}
 
 function UserSelectContainer(): JSX.Element {
-  const dispatch = useAppDispatch();
+  const { uuid, role } = useAppSelector(getCandidate) as UserOuput;
   const candidates = useAppSelector(getCandidates);
+  const countRequests = useAppSelector(getCountRequests);
+  const selectUser = useAppSelector(getSelectUser);
+  const dispatch = useAppDispatch();
 
-  const email = useAppSelector(getSelectEmail);
-
-  const onChange: OnChangeType = (value) => {
-    dispatch(selectEmail(value));
-  };
-
-  const onClick = (): void => {
-    dispatch(deleteUserAction({ uuid: email }));
-    dispatch(resetEmail());
+  const callbacks: ICallbacks = {
+    onChange: (value) => {
+      dispatch(setSelectUser(value));
+    },
+    onClick: () => {
+      dispatch(deleteUserAction(selectUser));
+      dispatch(resetSelectUser());
+    },
   };
 
   useEffect(() => {
-    dispatch(getUsersAllAction());
-  }, [dispatch, email]);
+    if (uuid) dispatch(getUsersAllAction());
+
+    return () => {
+      dispatch(resetSelectUser());
+    };
+  }, [dispatch, uuid, countRequests]);
 
   return (
     <UserSelect
-      name="email"
+      role={role}
+      name={NameTextField.Email}
       candidates={candidates}
-      value={email}
-      onChange={onChange}
-      onClick={onClick}
+      value={selectUser}
+      id={NameTextField.Email}
+      label="Пользователь"
+      onChange={callbacks.onChange}
+      onClick={callbacks.onClick}
     />
   );
 }

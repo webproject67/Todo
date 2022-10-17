@@ -22,7 +22,7 @@ const getUserData = async (token: string): Promise<null | UserOuput> => {
   if (token) {
     const userData = jwtVerify(token, TypeToken.Refresh);
     const findToken = tokenDal.getTokenByToken(token);
-    if (!userData || !findToken) throw createError(401, `Не авторизован`);
+    if (!userData || !findToken) throw createError(400, `Не авторизован`);
 
     return userData as UserOuput;
   }

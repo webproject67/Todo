@@ -1,47 +1,44 @@
 import React from 'react';
 import { cn as bem } from '@bem-react/classname';
-import { AppRoute, Role } from '../../utils/const';
+import { AppRoute } from '../../utils/const';
 import Link from '../link';
 import Button from '../button';
 import './style.scss';
-import { UserCandidate } from '../../types/user-type';
-import { OnClickType } from '../../types/event-type';
 
 interface IHeader {
-  candidate: UserCandidate;
-  isAuthorization: boolean;
-  onClick: OnClickType;
+  email: string;
+  isAuthorized: boolean;
+  onClick: () => void;
 }
 
-function Header({ candidate, isAuthorization, onClick }: IHeader): JSX.Element {
+function Header({ email, isAuthorized, onClick }: IHeader): JSX.Element {
   const cn = bem('Header');
 
   return (
     <header className={cn()}>
-      <div className={cn('wrapper')}>
-        <span className={cn('logo')}>
-          <Link href={AppRoute.Root}>todo</Link>
-        </span>
-        <div className={cn('btns')}>
-          <span className={cn('profile')}>
-            <Link href={AppRoute.Profile}>{candidate.email}</Link>
+      {isAuthorized ? (
+        <div className={cn('wrapper')}>
+          <span className={cn('logo')}>
+            <Link href={AppRoute.Root}>todo</Link>
           </span>
-          {candidate.role !== Role.User && (
+          <div className={cn('btns')}>
+            <Link href={AppRoute.Profile}>{email}</Link>
             <span className={cn('dashboard')}>
-              <Link href={AppRoute.Dashboard} underline="none">
+              <Link href={AppRoute.Dashboard} underlinedHover={false}>
                 <Button>Админ панель</Button>
               </Link>
             </span>
-          )}
-          {isAuthorization ? (
             <Button onClick={onClick}>Выйти</Button>
-          ) : (
-            <Link href={AppRoute.SignIn} underline="none">
-              <Button>Войти</Button>
-            </Link>
-          )}
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className={cn('wrapper')}>
+          <span className={cn('logo')}>todo</span>
+          <Link href={AppRoute.SignIn} underlinedHover={false}>
+            <Button>Авторизация</Button>
+          </Link>
+        </div>
+      )}
     </header>
   );
 }

@@ -1,61 +1,60 @@
 import React from 'react';
 import { cn as bem } from '@bem-react/classname';
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
+import Select from '../select';
 import Button from '../button';
-import { UserOuput, UserInputSelect } from '../../types/user-type';
+import { NameTextField, VariantButton, Role } from '../../utils/const';
 import { OnChangeType } from '../../types/event-type';
+import { UsersOuput } from '../../types/user-type';
 import './style.scss';
 
 interface IUserSelect {
-  name: keyof UserInputSelect;
-  candidates: UserOuput[];
+  role: string;
+  name: NameTextField.Email;
+  candidates: UsersOuput;
   value: string;
+  id: NameTextField.Email;
+  label: string;
   onChange: OnChangeType;
   onClick: () => void;
 }
 
 function UserSelect({
+  role,
   name,
   candidates,
   value,
+  id,
+  label,
   onChange,
   onClick,
 }: IUserSelect): JSX.Element {
   const cn = bem('UserSelect');
 
-  const handleChange = (event: SelectChangeEvent) => {
-    onChange(event.target.value, name);
-  };
+  const convertCandidates: {
+    value: string;
+    text: string;
+  }[] = candidates.map((elem) => ({ value: elem.uuid, text: elem.email }));
 
   return (
     <div className={cn()}>
       <h2 className={cn('title')}>Админ панель</h2>
-      <div className={cn('form')}>
-        <FormControl fullWidth>
-          <InputLabel id="email">Пользователь</InputLabel>
-          <Select
-            labelId="email"
-            label="Пользователь"
-            name={name}
-            value={value}
-            onChange={handleChange}
-          >
-            {candidates.map((elem) => (
-              <MenuItem key={elem.uuid} value={elem.uuid}>
-                {elem.email}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+      <div className={cn('select')}>
+        <Select
+          name={name}
+          options={convertCandidates}
+          value={value}
+          id={id}
+          label={label}
+          onChange={onChange}
+        />
       </div>
-      <div className={cn('btn')}>
-        <Button variant="contained" onClick={onClick}>
-          Удалить пользователя
-        </Button>
-      </div>
+      {role === Role.SuperAdmin && (
+        <div className={cn('btn')}>
+          <Button variant={VariantButton.Contained} onClick={onClick}>
+            Удалить пользователя
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

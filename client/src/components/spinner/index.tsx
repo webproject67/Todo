@@ -1,28 +1,23 @@
-import React, { CSSProperties } from 'react';
+import React, { useEffect } from 'react';
 import ClockLoader from 'react-spinners/ClockLoader';
-import LayoutModal from '../layout-modal';
+import LayoutComponent from '../layout-component';
+import { ComponentStyles } from '../../utils/const';
 
-const override: CSSProperties = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-};
+function Spinner(): JSX.Element {
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
 
-interface ISpinner {
-  isLoaded: boolean;
-}
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  });
 
-function Spinner({ isLoaded }: ISpinner): JSX.Element {
   return (
-    <LayoutModal>
-      <ClockLoader
-        loading={isLoaded}
-        cssOverride={override}
-        size={150}
-        color="#ffffff"
-      />
-    </LayoutModal>
+    <LayoutComponent styles={ComponentStyles.Modal}>
+      <LayoutComponent styles={ComponentStyles.Centre}>
+        <ClockLoader size={150} color="#ffffff" />
+      </LayoutComponent>
+    </LayoutComponent>
   );
 }
 

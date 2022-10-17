@@ -1,15 +1,16 @@
 import { NameSpace } from '../../utils/const';
 import { State } from '../../types/state-type';
-import { TasksAll } from '../../types/task-type';
+import { TasksOuput } from '../../types/task-type';
 
-const getCount = (state: State): number => state[NameSpace.TaskData].task.count;
+const getTasks = (state: State): TasksOuput => state[NameSpace.TaskData].tasks;
 
-const getTasks = (state: State): TasksAll =>
-  state[NameSpace.TaskData].task.rows;
+const getCountTasks = (state: State): number =>
+  state[NameSpace.TaskData].countTasks;
 
-const getLoaded = (state: State): boolean => state[NameSpace.TaskData].isLoaded;
+const getLoading = (state: State): boolean =>
+  state[NameSpace.TaskData].isLoaded;
 
-const getCountUpdates = (state: State): number =>
-  state[NameSpace.TaskData].countUpdates;
+const getCountRequests = (state: State): number =>
+  state[NameSpace.TaskData].countRequests;
 
-export { getCount, getTasks, getLoaded, getCountUpdates };
+export { getTasks, getCountTasks, getLoading, getCountRequests };
