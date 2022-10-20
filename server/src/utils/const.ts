@@ -1,3 +1,5 @@
+const DEVELOPMENT = 'development';
+
 const COOKIE_NAME = 'todoToken';
 
 enum ExpiresToken {
@@ -28,4 +30,12 @@ enum TypeTextField {
   Password = 'password',
 }
 
-export { COOKIE_NAME, ExpiresToken, TypeToken, Role, Model, TypeTextField };
+export {
+  DEVELOPMENT,
+  COOKIE_NAME,
+  ExpiresToken,
+  TypeToken,
+  Role,
+  Model,
+  TypeTextField,
+};
