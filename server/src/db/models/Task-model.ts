@@ -15,10 +15,6 @@ const TaskModel = sequelize.define<ITaskModel>(Model.Task, {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-  },
   priority: {
     type: DataTypes.INTEGER,
     defaultValue: 2,

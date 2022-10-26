@@ -20,12 +20,8 @@ const UserModel = sequelize.define<IUserModel>(Model.User, {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-  },
   role: {
-    type: DataTypes.ENUM(Role.User, Role.Admin, Role.SuperAdmin),
+    type: DataTypes.STRING,
     defaultValue: Role.User,
   },
   isActivated: {

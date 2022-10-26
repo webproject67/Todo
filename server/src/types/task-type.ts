@@ -3,7 +3,6 @@ import { Optional } from 'sequelize';
 type TaskAttributes = {
   uuid: string;
   text: string;
-  id?: number;
   priority?: number;
   isClosed?: boolean;
   createdAt?: Date;

@@ -5,7 +5,6 @@ type UserAttributes = {
   uuid: string;
   email: string;
   password: string;
-  id?: number;
   role?: Role;
   isActivated?: boolean;
   createdAt?: Date;

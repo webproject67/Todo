@@ -22,10 +22,6 @@ const TokenModel = sequelize.define<ITokenModel>(Model.Token, {
     allowNull: false,
     unique: true,
   },
-  id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-  },
 });
 
 export default TokenModel;
