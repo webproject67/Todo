@@ -6,12 +6,11 @@ import { COOKIE_NAME } from './const';
 const createCookie = async (
   res: Response,
   result: UserCreate
-  ): Promise<void> => {
+): Promise<void> => {
   res.cookie(COOKIE_NAME, result.refreshToken, {
     maxAge: 30 * 24 * 60 * 60 * 1000,
     httpOnly: true,
   });
-
 
   await tokenService.createToken({
     UserUuid: result.candidate.uuid,

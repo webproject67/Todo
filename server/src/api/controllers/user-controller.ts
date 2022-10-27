@@ -4,7 +4,7 @@ import createError from 'http-errors';
 import asyncHandler from 'express-async-handler';
 import * as userService from '../../db/services/user-service';
 import * as tokenService from '../../db/services/token-service';
-import { COOKIE_NAME, TypeTextField } from '../../utils/const';
+import { COOKIE_NAME, TypeTextField, DEVELOPMENT } from '../../utils/const';
 import createCookie from '../../utils/create-cookie';
 import sendMail from '../../mailer/nodemailer';
 import { UserInput } from '../../types/user-type';
@@ -22,10 +22,12 @@ const signUp = asyncHandler(
 
     createCookie(res, result);
 
-    sendMail(
-      result.candidate.email,
-      `${process.env.URL_API}/api/v1/users/activate/${result.candidate.uuid}`
-    );
+    if (process.env.NODE_ENV !== DEVELOPMENT) {
+      sendMail(
+        result.candidate.email,
+        `${process.env.URL_API}/api/v1/users/activate/${result.candidate.uuid}`
+      );
+    }
 
     return res.json(result.accessToken);
   }
