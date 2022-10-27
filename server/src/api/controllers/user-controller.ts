@@ -13,7 +13,7 @@ const signUp = asyncHandler(
   async (req: Request, res: Response): Promise<any> => {
     const errors = validationResult(req);
     if (!errors.isEmpty() && errors.array()[0].param === TypeTextField.Email)
-      throw createError(400, 'Введите корректный email123');
+      throw createError(400, 'Введите корректный email');
     if (!errors.isEmpty() && errors.array()[0].param === TypeTextField.Password)
       throw createError(400, 'Пароль должен содержать не менее 6 символов');
 

@@ -9,10 +9,7 @@ const createCookie = async (
   ): Promise<void> => {
   res.cookie(COOKIE_NAME, result.refreshToken, {
     maxAge: 30 * 24 * 60 * 60 * 1000,
-    httpOnly: false,
-    domain: '.vercel.app',
-    sameSite: false,
-    secure: true,
+    httpOnly: true,
   });
 
 
