@@ -1,6 +1,6 @@
 # Todo
 
-## как использовать
+## Как использовать
 
 ### Открыть первый терминал ввести команду:
 
@@ -40,7 +40,3 @@
 ## Используемые сокращения
 
 - PERN = (PostgreSQL, Express JS, React, Node.JS)
-
-### Demo:
-
-- [Online](https://demo-todo-two.vercel.app/)
