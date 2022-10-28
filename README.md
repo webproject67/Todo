@@ -16,7 +16,7 @@
 
 ## Доступ к PgAdmin4
 
-### В папке server файл .env.local ввести свой user и password
+### В папке server файл .env ввести свой user и password
 
 - DB_USER=user
 - DB_PASSWORD=password
@@ -34,9 +34,5 @@
 
 - PostgreSQL
 - Express JS
-- React
+- React JS
 - Node JS
-
-## Используемые сокращения
-
-- PERN = (PostgreSQL, Express JS, React, Node.JS)
