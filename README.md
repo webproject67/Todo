@@ -1,38 +1,41 @@
 # Todo
 
-## Как использовать
-
-### Открыть первый терминал ввести команду:
-
-- cd client
-- npm i
-- npm start
-
-### Открыть второй терминал ввести команду:
-
-- cd server
-- npm i
-- npm run dev
-
-## Доступ к PgAdmin4
-
-### В папке server файл .env ввести свой user и password
-
-- DB_USER=user
-- DB_PASSWORD=password
-
-### В PgAdmin4 создать базу данных, название базы данных: webproject67Todo
-
-## Зависимости
-
-### Нужно будет установить:
-
-- [PostgreSQL](https://www.postgresql.org/download/)
-- [Node.JS / NPM](https://nodejs.org/en/download/)
-
-## Используемые технологии
+## Стек технологии PERN:
 
 - PostgreSQL
 - Express JS
 - React JS
 - Node JS
+
+## Для запуска понадобится Docker:
+
+- [Docker](https://www.docker.com/)
+
+### Запустить:
+
+```
+docker-compose up -d
+```
+
+### Остановить:
+
+```
+docker-compose stop
+```
+
+## Перейти по адресу:
+
+ - [http://localhost:3000](http://localhost:3000)
+
+## Доступ к PgAdmin4:
+
+- **URL:** [http://localhost:5050](http://localhost:5050)
+- **Username:** `admin@domain.com`
+- **Password:** `adminSecret`
+
+#### Добавить новый сервер в PgAdmin4:
+
+- **Host name/address** `todo_pg`
+- **Port** `5432`
+- **Username** `postgres`
+- **Password** `root`

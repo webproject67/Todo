@@ -1,0 +1,60 @@
+version: "3.1"
+
+services:
+  client:
+    build:
+      context: client
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    volumes:
+      - ./client:/client
+      - /client/node_modules
+    ports:
+      - 3000:3000
+    depends_on:
+      - pg
+    environment:
+      WATCHPACK_POLLING: true
+  server:
+    build:
+      context: server
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    volumes:
+      - ./server:/server
+      - /server/node_modules
+    ports:
+      - 3001:3001
+    depends_on:
+      - pg
+    environment:
+      DB_USER: "postgres"
+      DB_PASSWORD: "root"
+      DB_NAME: "todo_db"
+      DB_HOST: "todo_pg"
+  pg:
+    container_name: todo_pg
+    image: postgres
+    restart: unless-stopped
+    volumes:
+      - ./db/database:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "root"
+      POSTGRES_DB: "todo_db"
+      PGDATA: "/var/lib/postgresql/data"
+  pgadmin4:
+    image: dpage/pgadmin4
+    restart: unless-stopped
+    volumes:
+      - ./db/db_manager:/var/lib/pgadmin
+    ports:
+      - 5050:80
+    depends_on:
+      - pg
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "admin@domain.com"
+      PGADMIN_DEFAULT_PASSWORD: "adminSecret"
+  

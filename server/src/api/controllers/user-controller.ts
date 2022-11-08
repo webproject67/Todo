@@ -25,7 +25,7 @@ const signUp = asyncHandler(
     if (process.env.NODE_ENV !== DEVELOPMENT) {
       sendMail(
         result.candidate.email,
-        `${process.env.URL_API}/api/v1/users/activate/${result.candidate.uuid}`
+        `${process.env.URL_SERVER}/api/v1/users/activate/${result.candidate.uuid}`
       );
     }
 
