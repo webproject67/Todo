@@ -14,7 +14,7 @@ services:
     depends_on:
       - pg
     environment:
-      WATCHPACK_POLLING: true
+      WATCHPACK_POLLING: "true"
   server:
     build:
       context: server
